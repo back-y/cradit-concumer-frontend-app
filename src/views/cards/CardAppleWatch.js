@@ -48,17 +48,19 @@ const CardAppleWatch = ({ id, title, price, description, icon, stock, unit, pic 
   const buttonBackgroundColor = isInCart ? 'red' : '#d7a022';
 
   return (
-    <Card>
+    <Card >
       <CardMedia sx={{
-        height: '9.375rem', '&:hover': {
+        transition: 'transform 0.5s',
+        height: '17.5rem', '&:hover': {
           boxShadow: '0 1px 20px 1px black',
           backgroundColor: '#d7a022',
+          transform: 'scale(1.2) !important',
 
           //  height: '25.375rem',
         }
       }} image={pic} />
-      <CardContent sx={{ padding: theme => `${theme.spacing(3, 5.25, 4)} !important` }}>
-        <Typography variant='h6' sx={{ marginBottom: 2 }}>
+      <CardContent sx={{ height: '12.5rem', padding: theme => `${theme.spacing(3, 5.25, 4)} !important` }}>
+        <Typography variant='h6' sx={{ marginBottom: 2, fontWeight: 'bold', fontSize: '1.25rem' }}>
           {title}
         </Typography>
         <Typography sx={{ marginBottom: 2 }}>{price} birr</Typography>

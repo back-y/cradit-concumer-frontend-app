@@ -153,12 +153,13 @@ import Magnify from 'mdi-material-ui/Magnify';
 const Search = ({ searchQuery, handleSearchChange }) => {
     return (
         <TextField
-            fullWidth
+            // fullWidth
             type="text"
             placeholder="Search by name"
             value={searchQuery}
             onChange={handleSearchChange}
             size="small"
+            color='warning'
             sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4 } }}
             InputProps={{
                 startAdornment: (
