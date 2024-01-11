@@ -82,6 +82,15 @@ const LoginComp = () => {
   const theme = useTheme()
   const router = useRouter()
 
+  //* handle keydown event
+  const handleEnterKey = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // Prevent form submission or other default behavior
+      handleSubmit();
+    }
+  };
+
+
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
   }
@@ -105,8 +114,11 @@ const LoginComp = () => {
 
   const handleSubmit = async (e) => {
     console.log(values)
-    setLoading(true);
-    e.preventDefault()
+    setLoading(true)
+
+    // setTimeout(() => { setLoading(false); }, 3000)
+
+    // e.preventDefault()
 
     axios.post(userUrl, values, { withCredentials: true })
       .then((response) => {
@@ -200,6 +212,7 @@ const LoginComp = () => {
               placeholder='carterleonard@gmail.com'
               helperText='You can use letters, numbers & periods'
               onChange={handleChange('email')}
+
             />
             <FormControl fullWidth>
               <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
@@ -208,6 +221,7 @@ const LoginComp = () => {
                 value={values.password}
                 id='auth-login-password'
                 onChange={handleChange('password')}
+                onKeyDown={handleEnterKey}
                 type={showPassword ? 'text' : 'password'}
                 endAdornment={
                   <InputAdornment position='end'>

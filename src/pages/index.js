@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Grid, Typography, Button } from '@mui/material';
 import BlankLayout from 'src/@core/layouts/BlankLayout'
@@ -13,6 +12,7 @@ const LandingPage = () => {
 
   // progress
   const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
 
   const router = useRouter();
 
@@ -27,10 +27,10 @@ const LandingPage = () => {
   }
 
   const goToLogin = () => {
-    setLoading(true);
+    setLoading2(true);
     setTimeout(() => {
       // Finish the operation
-      setLoading(false);
+      setLoading2(false);
     }, 3000);
     Cookies.set('customerType', 'corporate')
     router.push('hero');
@@ -41,25 +41,26 @@ const LandingPage = () => {
   }, [])
 
   const bannerStyle = {
-    backgroundImage: `url('/images/PBETH/farmer.jpg')`, // Replace with your image URL
+    backgroundImage: `url('/images/PBETH/02.jpg')`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     height: '100vh',
     width: '100vh',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
     alignItems: 'center',
     color: '#fff',
     textAlign: 'center',
+    paddingTop: '2.5rem'
   };
+
 
   return (
     <div>
       {/* Banner Section */}
       <Grid container>
         <Grid item xs={12} style={bannerStyle}>
-          <Grid style={{ paddingRight: '30rem', position: 'relative', }}>
+          <Grid style={{ position: 'relative', maiginTop: '0' }}>
             <Typography variant="h4" color="blacl" gutterBottom>
               <h1>Welcome to KCCM</h1>
             </Typography>
@@ -71,24 +72,28 @@ const LandingPage = () => {
             <Grid item xs={12} md={6} style={{ padding: '10px' }}>
 
               <Button variant="contained" color="success" size="large" style={{ padding: '10px', margin: '20px' }}
-                onClick={goToShop} disabled={loading}>
+                onClick={goToShop} disabled={loading}> <FormatIndentDecreaseIcon />
                 {loading ? <CircularProgress size={24} color="inherit" /> : <Typography style={{ marginLeft: '10px' }} color="white" gutterBottom>
-                  Get Products as Individual
+                  Shop
                 </Typography>}
-                <FormatIndentDecreaseIcon />
 
-              </Button>
+
+              </Button><Typography style={{ marginLeft: '10px', color: 'green' }} color="white" gutterBottom>
+                Get Products as Individual
+              </Typography>
             </Grid>
             <Grid item xs={12} md={6} style={{ padding: '10px' }}>
 
               <Button variant="contained" color="inherit" size="large" style={{ padding: '10px', background: 'black', margin: '20px' }}
-                onClick={goToLogin} disabled={loading}>
-                {loading ? <CircularProgress size={24} color="inherit" /> : <Typography style={{ marginRight: '10px' }} color="white" gutterBottom>
-                  Login or Register as Corporate
+                onClick={goToLogin} disabled={loading2}>
+                {loading2 ? <CircularProgress size={24} color="inherit" /> : <Typography style={{ marginRight: '10px' }} color="white" gutterBottom>
+                  Login
                 </Typography>}
 
                 <FormatIndentIncreaseIcon />
-              </Button>
+              </Button><Typography style={{ marginRight: '10px', color: ' black ' }} color="white" gutterBottom>
+                Register as Corporate
+              </Typography>
             </Grid>
           </Grid>
         </Grid>

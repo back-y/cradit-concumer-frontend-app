@@ -45,25 +45,25 @@ import Credit from 'src/views/tables/Credit'
 
 const salesData = [
     {
-        stats: '245k',
+        stats: '0 ETB',
         title: 'Total Credit Given',
         color: 'primary',
         icon: <TrendingUp sx={{ fontSize: '1.75rem' }} />
     },
     {
-        stats: '12.5k',
+        stats: '0 ETB',
         title: 'Total Credit Paid',
         color: 'success',
         icon: <AccountOutline sx={{ fontSize: '1.75rem' }} />
     },
     {
-        stats: '1.54k',
+        stats: '0 ETB',
         color: 'warning',
         title: 'Total Credit Unpaid',
         icon: <CellphoneLink sx={{ fontSize: '1.75rem' }} />
     },
     {
-        stats: '$88k',
+        stats: '0 ETB',
         color: 'info',
         title: 'Total Unpaid Credit With Interest',
         icon: <CurrencyUsd sx={{ fontSize: '1.75rem' }} />

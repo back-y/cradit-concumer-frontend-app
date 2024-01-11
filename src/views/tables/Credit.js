@@ -190,6 +190,7 @@ const TableForRequestedCredits = () => {
     useEffect(async () => {
         const token = Cookies.get('jwt')
         const url = process.env.NEXT_PUBLIC_API_URL + 'order';
+
         const resp = await axios.get(url, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -220,7 +221,7 @@ const TableForRequestedCredits = () => {
         dispatch(addOrder(orderId))
     }
 
-    return (
+    return reqCredit.length > 0 ? (
 
         <Card>
             <TableContainer>
@@ -294,7 +295,13 @@ const TableForRequestedCredits = () => {
                 </Table>
             </TableContainer>
         </Card>
-    );
+
+    ) :
+        (<> Please wait...
+            <br />
+            <br />
+            <br />
+            ...or try again later</>);
 };
 
 export default TableForRequestedCredits;

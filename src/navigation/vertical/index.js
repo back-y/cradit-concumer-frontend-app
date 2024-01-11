@@ -120,7 +120,7 @@ const navigation = () => {
       isAllowed: customerType === 'individual',
       title: 'Vegitables and Fruit',
       icon: CarRentalIcon,
-      path: '/clients/shopindividual/vegitablesandfruit'
+      path: '/clients/shopindividual/vegitableandfruit'
     },
 
     // {
