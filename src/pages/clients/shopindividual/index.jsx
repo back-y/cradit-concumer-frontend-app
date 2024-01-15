@@ -19,6 +19,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import axios from 'axios'
 import Search from './Search'
+import Cookies from 'js-cookie'
+import Error401 from 'src/pages/401'
 
 // ** Layout Import
 import { Pagination, PaginationItem } from '@mui/material'
@@ -132,8 +134,10 @@ const Shop = () => {
 
   const products = useSelector(getProducts)
   const itemsInCart = useSelector(getItemsInCart)
+  const customer = Cookies.get('customerType')
+  const role = Cookies.get('role')
 
-  return (
+  return !role && customer === 'individual' ? (
     <section>
       <Search searchQuery={searchQuery} handleSearchChange={handleSearchChange} sx={{ innerWidth: '50%' }} />
       <TabContext value={value}>
@@ -197,6 +201,8 @@ const Shop = () => {
         </CardContent>
       </TabContext>
     </section>
+  ) : (
+    <Error401 />
   )
 }
 

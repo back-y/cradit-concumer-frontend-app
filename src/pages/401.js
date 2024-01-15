@@ -16,7 +16,7 @@ import FooterIllustrations from 'src/views/pages/misc/FooterIllustrations'
 // ** Styled Components
 const BoxWrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
-    width: '90vw'
+    // width: '90vw'
   }
 }))
 
@@ -56,6 +56,7 @@ const Error401 = () => {
     </Box>
   )
 }
-Error401.getLayout = page => <BlankLayout>{page}</BlankLayout>
 
 export default Error401
+
+Error401.getLayout = page => <BlankLayout>{page}</BlankLayout>

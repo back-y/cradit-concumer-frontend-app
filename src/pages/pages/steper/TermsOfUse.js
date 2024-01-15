@@ -1,7 +1,7 @@
 
 import React from 'react';
 import ShowMoreText from './ShowMoreText';
-import Approve from './Approve';
+import ApproveForAddCustomer from './ApproveForAddCustomer';
 import Cookies from 'js-cookie'
 
 const role = Cookies.get('role');
@@ -10,7 +10,7 @@ const jwt = Cookies.get('jwt');
 const YourComponent = () => {
     return role ? (
         <>
-            <Approve />
+            <ApproveForAddCustomer />
 
         </>) :
         (<>  <ShowMoreText /></>);

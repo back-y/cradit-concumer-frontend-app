@@ -38,6 +38,8 @@ const LandingPage = () => {
 
   useEffect(() => {
     Cookies.remove('customerType')
+    Cookies.remove('role')
+    Cookies.remove('jwt')
   }, [])
 
   const bannerStyle = {

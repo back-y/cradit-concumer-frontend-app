@@ -65,6 +65,7 @@ const Error500 = () => {
     </Box>
   )
 }
-Error500.getLayout = page => <BlankLayout>{page}</BlankLayout>
 
 export default Error500
+
+Error500.getLayout = page => <BlankLayout>{page}</BlankLayout>

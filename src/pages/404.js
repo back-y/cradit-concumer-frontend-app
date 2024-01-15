@@ -65,6 +65,7 @@ const Error404 = () => {
     </Box>
   )
 }
-Error404.getLayout = page => <BlankLayout>{page}</BlankLayout>
 
 export default Error404
+
+Error404.getLayout = page => <BlankLayout>{page}</BlankLayout>
