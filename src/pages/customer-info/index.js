@@ -166,6 +166,9 @@ const CustomGallery = () => {
                         <div className='tm_card_note tm_mobile_hide' style={{ display: 'flex' }} >
                             <h6 className='tm_primary_color'>Email: </h6>&nbsp;&nbsp; <span> <h6 style={{ color: 'red' }}> {userInfos.email}</h6></span>
                         </div>
+                        <div className='tm_card_note tm_mobile_hide' style={{ display: 'flex' }} >
+                            <h6 className='tm_primary_color'>Approved by: </h6>&nbsp;&nbsp; <span> <h6 style={{ color: 'red' }}> {userInfos.approvedBy}</h6></span>
+                        </div>
                     </div>
                     <div className='tm_card_note tm_mobile_hide' style={{ width: '100%', display: 'block', justifyContent: 'space-between' }}>
                         <div className='tm_card_note tm_mobile_hide' style={{ display: 'flex' }} >
@@ -173,6 +176,10 @@ const CustomGallery = () => {
                         </div>
                         <div className='tm_card_note tm_mobile_hide' style={{ display: 'flex' }} >
                             <h6 className='tm_primary_color'>Company: </h6>&nbsp;&nbsp; <span> <h6 style={{ color: 'red' }}> {userInfos.company}</h6></span>
+                        </div>
+                        <div className='tm_card_note tm_mobile_hide' style={{ display: 'flex' }} >
+                            <h6 className='tm_primary_color'>Approval date: </h6>&nbsp;&nbsp; <span> <h6 style={{ color: 'red' }}> {userInfos.updatedAt.slice(0, 10)
+                            }</h6></span>
                         </div>
                     </div>
 
