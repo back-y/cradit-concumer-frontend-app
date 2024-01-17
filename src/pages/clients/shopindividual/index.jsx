@@ -179,7 +179,7 @@ const Shop = () => {
             <br />
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
               <Pagination
-                count={Math.ceil(productCount / 8)}
+                count={Math.ceil(productCount / 12)}
                 page={currentPage}
                 onChange={handlePageChange}
                 color='secondary'
