@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Grid, Typography, Card, CardContent, CardMedia, IconButton } from "@mui/material";
+import React, { useEffect, useState, useRef } from 'react';
+import { Box, Grid, Typography, Card, CardContent, CardMedia, IconButton, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Approve from 'src/pages/pages/steper/Approve';
 import Cookies from 'js-cookie';
@@ -13,6 +13,8 @@ const CustomGallery = () => {
 
   const [images, setImages] = useState([])
   const [userInfos, setUserInfos] = useState([])
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const imageRef = useRef();
 
   useEffect(async () => {
     const id = Cookies.get('new-user_id')
@@ -41,10 +43,28 @@ const CustomGallery = () => {
 
   }, [])
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleSlide = (index) => {
     setCurrentIndex(index);
+  };
+
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.href = images[currentIndex];
+    link.download = `image_${currentIndex + 1}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handlePrint = () => {
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write('<html><head><title>Print</title></head><body>');
+    printWindow.document.write(`<img src="${images[currentIndex]}" style="max-width: 100%;" />`);
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.print();
   };
 
   return (
@@ -86,65 +106,21 @@ const CustomGallery = () => {
           onSlide={handleSlide}
         />
       </Grid>
+      {/* Download and Print Buttons */}
+      <Grid container spacing={2}>
+        <Button variant="contained" color="primary" onClick={handleDownload}>
+          Download
+        </Button>
+
+        <Button variant="contained" color="secondary" onClick={handlePrint} style={{ marginLeft: '10px' }}>
+          Print
+        </Button>
+      </Grid>
       <Approve />
     </Box>
   );
 };
 
 export default CustomGallery;
-
-
-// import React, { useState } from 'react';
-// import Gallery from 'react-image-gallery';
-// import 'react-image-gallery/styles/css/image-gallery.css';
-// import Zoom from 'react-medium-image-zoom';
-// import 'react-medium-image-zoom/dist/styles.css';
-
-// const CustomGallery = ({ images }) => {
-//   const [currentIndex, setCurrentIndex] = useState(0);
-
-//   const handleSlide = (index) => {
-//     setCurrentIndex(index);
-//   };
-
-//   return (
-//     <div>
-//       <Gallery
-//         items={images.map((image) => ({
-//           original: image,
-//           thumbnail: image,
-//         }))}
-//         showNav={true}
-//         showFullscreenButton={false}
-//         showPlayButton={false}
-//         startIndex={currentIndex}
-//         onSlide={handleSlide}
-//         renderCustomControls={({ currentSlide }) => (
-//           <div>
-//             <Zoom
-//               image={{
-//                 src: images[currentSlide],
-//                 alt: '',
-//                 className: 'img-zoom',
-//               }}
-//               zoomImage={{
-//                 src: images[currentSlide],
-//                 alt: '',
-//               }}
-//             />
-//             <a
-//               href={images[currentSlide]}
-//               download={`image_${currentSlide + 1}`}
-//             >
-//               Download
-//             </a>
-//           </div>
-//         )}
-//       />
-//     </div>
-//   );
-// };
-
-// export default CustomGallery;
 
 

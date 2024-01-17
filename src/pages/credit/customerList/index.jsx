@@ -12,7 +12,7 @@ import Cookie from 'js-cookie'
 const role = Cookie.get('role')
 
 const CustomerList = () => {
-  return  role === "credit_manager" ?  (
+  return role === 'credit_manager' ? (
     <div>
       <Typography variant='h6' sx={{ marginBottom: 2 }}>
         Customers List
@@ -21,12 +21,14 @@ const CustomerList = () => {
         <CustomerListWrapper
           subTitle='Corporate credit Info'
           mainTitle='Corporate clients credit info'
-          mainTitle2='Indivisual credit info'
-          subTitle2='Indivisual info'
+          mainTitle2='Individual credit info'
+          subTitle2='Individual info'
         />
       </Grid>
     </div>
-  ): (<Err404 />)
+  ) : (
+    <Err404 />
+  )
 }
 
 export default CustomerList

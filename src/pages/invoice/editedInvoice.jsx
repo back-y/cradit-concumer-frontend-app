@@ -29,7 +29,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getOrder } from 'src/redux/orderSlice'
 import CheckIfPaid from './CheckIfPaid'
 
-import {addItemToCart, addOrderToCart} from 'src/redux/editCartSlice'
+import { addItemToCart, addOrderToCart } from 'src/redux/editCartSlice'
 
 import { useRouter } from 'next/router'
 
@@ -69,46 +69,47 @@ const ResetButtonStyled = styled(Button)(({ theme }) => ({
 const Invoice = () => {
   // ===fetch dtas states====
   const [orderItems, setOrderItems] = useState([])
-  const [ order, setOrder ] = useState({})
-  
+  const [order, setOrder] = useState({})
+
   const [user, setUser] = useState({
     name: '',
     email: ''
   })
 
   const orderLocal = useSelector(getOrder)
-  axios.get(process.env.NEXT_PUBLIC_API_URL + 'credit')
+  axios
+    .get(process.env.NEXT_PUBLIC_API_URL + 'credit')
     .then(resp => {
-        const servOrder = resp.data.find(ord => (ord.editOrderId !== orderLocal.editOrderId))
-        setOrder(servOrder);
-        setOrderItems(servOrder.products);
-        setUser({
-          name: servOrder.userName,
-          email: servOrder.userEmail,
-        })
+      const servOrder = resp.data.find(ord => ord.editOrderId === orderLocal.editOrderId)
+      setOrder(servOrder)
+      setOrderItems(servOrder.products)
+      setUser({
+        name: servOrder.userName,
+        email: servOrder.userEmail
+      })
     })
     .catch(err => {
-        console.log("Error: ", err )
+      console.log('Error: ', err)
     })
-  
-  // console.log("Server Order : ", order)  
 
-//   const fetchData = async () => {
-//     setOrderItems(order.products)
-//     const userId = order.userId
-//     const userUrl = process.env.NEXT_PUBLIC_API_URL + 'auth/' + userId
-//     const resp = await axios.get(userUrl)
-//     setUser({
-//       name: resp.data.name,
-//       email: resp.data.email
-//     })
-//   }
-//   console.log('Order: ', order)
-//   console.log('Order Items: ', orderItems)
+  // console.log("Server Order : ", order)
 
-//   useEffect(() => {
-//     fetchData()
-//   }, [])
+  //   const fetchData = async () => {
+  //     setOrderItems(order.products)
+  //     const userId = order.userId
+  //     const userUrl = process.env.NEXT_PUBLIC_API_URL + 'auth/' + userId
+  //     const resp = await axios.get(userUrl)
+  //     setUser({
+  //       name: resp.data.name,
+  //       email: resp.data.email
+  //     })
+  //   }
+  //   console.log('Order: ', order)
+  //   console.log('Order Items: ', orderItems)
+
+  //   useEffect(() => {
+  //     fetchData()
+  //   }, [])
 
   // ======= modal states====
 
@@ -124,7 +125,7 @@ const Invoice = () => {
   const handleCloseConfirm = () => {
     setOpenConfirm(false)
   }
-  
+
   const handleClickOpen = () => {
     setOpen(true)
   }
@@ -163,19 +164,20 @@ const Invoice = () => {
           userEmail: order.userEmail,
           orderId: order._id,
           creditInfoId: order.creditInfoId,
-          status : 'NOT_PAID',
+          status: 'NOT_PAID',
           products: order.products,
           totalPrice: order.totalPrice,
-          isDelivered: order.isDelivered,
-           }
+          isDelivered: order.isDelivered
+        }
 
-        axios.post(process.env.NEXT_PUBLIC_API_URL + 'credit' , creditBody, { withCredentials: true })
-        .then(credResp => {
-          console.log("Requested Credit Accepted: ", credResp)
-        })
-        .catch(err => {
-          console.log("Error in accepting the requested credit: ", err)
-        })
+        axios
+          .post(process.env.NEXT_PUBLIC_API_URL + 'credit', creditBody, { withCredentials: true })
+          .then(credResp => {
+            console.log('Requested Credit Accepted: ', credResp)
+          })
+          .catch(err => {
+            console.log('Error in accepting the requested credit: ', err)
+          })
       })
       .catch(err => {
         console.log(err)
@@ -217,20 +219,17 @@ const Invoice = () => {
         console.log(err)
       })
   }
-  
-  const router = useRouter()
-  
-  const handleEdit = () => {
 
-    console.log("Befor dispatch to editCartSlice: ", order.orderItems)
+  const router = useRouter()
+
+  const handleEdit = () => {
+    console.log('Befor dispatch to editCartSlice: ', order.orderItems)
     dispatch(addItemToCart(order.orderItems))
     dispatch(addOrderToCart(order))
     router.push('/warehouse/returned/editcart')
-    
+
     // setOpenConfirm(false)
   }
-
-  
 
   const handleProcessed = () => {
     setOpenConfirm(false)
@@ -301,12 +300,12 @@ const Invoice = () => {
   // mark as paid sectiom
   const [imgPaid, setImgPaid] = useState('/images/PBETH/pbethLogo.png')
 
-  const [paidAmount, setPaidAmount] = useState(0);
+  const [paidAmount, setPaidAmount] = useState(0)
 
   const [viewRP, setViewRP] = useState('/images/PBETH/pbethLogo.png')
 
-  const handleChange = (e) => {
-    setPaidAmount({[e.target.name]: Number(e.target.value)})
+  const handleChange = e => {
+    setPaidAmount({ [e.target.name]: Number(e.target.value) })
   }
 
   const onImgPaidChange = file => {
@@ -323,31 +322,30 @@ const Invoice = () => {
   const dispatch = useDispatch()
 
   const uploadFiles = async () => {
-
     const creditUrl = process.env.NEXT_PUBLIC_API_URL + 'credit/'
     const resp = await axios.get(creditUrl)
     const res = resp.data.find(credit => credit.orderId === order._id)
-    const creditId = res._id;
-    
+    const creditId = res._id
+
     cookies.set('creditId', creditId)
 
-    const formData = new FormData();
-    formData.append("file", imgPaid);
-    
-    try{
+    const formData = new FormData()
+    formData.append('file', imgPaid)
+
+    try {
       const paidAmountResp = await axios.patch(creditUrl + creditId, paidAmount)
-      console.log("Paid Amount: ", paidAmountResp)
+      console.log('Paid Amount: ', paidAmountResp)
     } catch (err) {
-      console.log("Error updating paidAmount: ", err)
+      console.log('Error updating paidAmount: ', err)
     }
-    
-    try{
+
+    try {
       const receiptUrl = creditUrl + 'upload/' + creditId
       const imgPostResp = await axios.post(receiptUrl, formData)
-      console.log("Receipt upload success: ", imgPostResp)
+      console.log('Receipt upload success: ', imgPostResp)
       handlePaid()
     } catch (err) {
-      console.log("Erro in uploading receipt", err)
+      console.log('Erro in uploading receipt', err)
     }
 
     // dispatch(
@@ -471,8 +469,8 @@ const Invoice = () => {
                       label='Amount'
                       placeholder={user.name}
                       defaultValue={order.totalPrice + order.totalPrice * 0.05}
-                      type="number"
-                      name="paidAmount"
+                      type='number'
+                      name='paidAmount'
                       onChange={handleChange}
                     />
                   </Grid>
@@ -481,12 +479,11 @@ const Invoice = () => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            
-          <br />
-                        <br />
-                        <Button variant='contained' sx={{ marginRight: 3.5, bgcolor: 'green' }} onClick={uploadFiles}>
-                          Save Changes
-                        </Button>
+            <br />
+            <br />
+            <Button variant='contained' sx={{ marginRight: 3.5, bgcolor: 'green' }} onClick={uploadFiles}>
+              Save Changes
+            </Button>
             <Button onClick={handleClose}>Cancel</Button>
             {/* <Button onClick={handleClose} autoFocus>
               Confirm
@@ -616,7 +613,7 @@ const Invoice = () => {
                           <th className='tm_width_2 tm_semi_bold tm_white_color tm_text_right'>Total</th>
                         </tr>
                       </thead>
-
+                      {/* orderItems */}
                       <tbody>
                         {orderItems !== null ? (
                           orderItems.map((item, key) => (
@@ -750,30 +747,36 @@ const Invoice = () => {
             </button>
             <Box>
               <Grid container>
-                {roles === 'credit_manager' && order.status !== 'REJECTED' && order.status !== 'ACCEPTED' &&  order.status !== 'PAID' && (
-                  <Button
-                    className='tm_invoice_btn tm_color2'
-                    style={{ color: 'black', width: '100%' }}
-                    onClick={() => {
-                      handleOpenConfirm()
-                      changer2()
-                    }}
-                  >
-                    Accept <span className='tm_btn_text'>Accept</span>
-                  </Button>
-                )}
-                {roles === 'credit_manager' && order.status !== 'REJECTED' && order.status !== 'ACCEPTED' && order.status !== 'PAID' && (
-                  <Button
-                    className='tm_invoice_btn tm_color4'
-                    style={{ color: 'black', width: '100%' }}
-                    onClick={() => {
-                      handleOpenConfirm()
-                      changer()
-                    }}
-                  >
-                    Reject <span className='tm_btn_text'>Reject</span>
-                  </Button>
-                )}
+                {roles === 'credit_manager' &&
+                  order.status !== 'REJECTED' &&
+                  order.status !== 'ACCEPTED' &&
+                  order.status !== 'PAID' && (
+                    <Button
+                      className='tm_invoice_btn tm_color2'
+                      style={{ color: 'black', width: '100%' }}
+                      onClick={() => {
+                        handleOpenConfirm()
+                        changer2()
+                      }}
+                    >
+                      Accept <span className='tm_btn_text'>Accept</span>
+                    </Button>
+                  )}
+                {roles === 'credit_manager' &&
+                  order.status !== 'REJECTED' &&
+                  order.status !== 'ACCEPTED' &&
+                  order.status !== 'PAID' && (
+                    <Button
+                      className='tm_invoice_btn tm_color4'
+                      style={{ color: 'black', width: '100%' }}
+                      onClick={() => {
+                        handleOpenConfirm()
+                        changer()
+                      }}
+                    >
+                      Reject <span className='tm_btn_text'>Reject</span>
+                    </Button>
+                  )}
                 <Link href='/comment'>
                   <Button
                     className='tm_invoice_btn tm_color3'
@@ -794,23 +797,23 @@ const Invoice = () => {
                 )}
                 {roles === 'customer' && (
                   <Link href='/comment'>
-                    <Button
-                      className='tm_invoice_btn tm_color2'
-                      style={{ color: 'black', width: '100%' }}
-                    >
+                    <Button className='tm_invoice_btn tm_color2' style={{ color: 'black', width: '100%' }}>
                       Return<span className='tm_btn_text'>Return</span>
                     </Button>
                   </Link>
                 )}
-                {roles === 'credit_manager' && order.status !== 'REJECTED' && order.status !== 'PENDING' &&  order.status !== 'PAID' && (
-                  <Button
-                    onClick={handleClickOpen}
-                    className='tm_invoice_btn tm_color2'
-                    style={{ color: 'black', width: '100%' }}
-                  >
-                    Paid<span className='tm_btn_text'>Paid</span>
-                  </Button>
-                )}
+                {roles === 'credit_manager' &&
+                  order.status !== 'REJECTED' &&
+                  order.status !== 'PENDING' &&
+                  order.status !== 'PAID' && (
+                    <Button
+                      onClick={handleClickOpen}
+                      className='tm_invoice_btn tm_color2'
+                      style={{ color: 'black', width: '100%' }}
+                    >
+                      Paid<span className='tm_btn_text'>Paid</span>
+                    </Button>
+                  )}
                 {roles === 'warehouse_manager' && order.status !== 'REJECTED' && (
                   <Button
                     className='tm_invoice_btn tm_color2'
@@ -825,11 +828,12 @@ const Invoice = () => {
           </div>
         </div>
       </div>
-      {order.status === 'REJECTED' || order.status === 'PAID' && (
-        <>
-          <CheckIfPaid />
-        </>
-      )}
+      {order.status === 'REJECTED' ||
+        (order.status === 'PAID' && (
+          <>
+            <CheckIfPaid />
+          </>
+        ))}
     </>
   ) : (
     <></>

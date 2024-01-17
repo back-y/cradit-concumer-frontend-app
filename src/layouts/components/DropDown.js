@@ -161,29 +161,29 @@ const UserDropdown = ({ icon2, icon1, iconTitle1, iconTitle2, handleClick, show 
                 {roles === 'credit_manager' && !show && <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
                     <Box sx={styles}>
                         {/* <AccountOutline sx={{ marginRight: 2 }} /> */}
-                        <Link href="/clients">
+                        {/* <Link href="/customer-info"> */}
 
-                            <Button variant='outlined' size='small' type='submit' sx={{
-                                py: 2.5, width: '100%',
-                                borderTopLeftRadius: 0,
-                                borderTopRightRadius: 0,
-                                marginBottom: '1rem',
+                        <Button onClick={handleClick} variant='outlined' size='small' type='submit' sx={{
+                            py: 2.5, width: '100%',
+                            borderTopLeftRadius: 0,
+                            borderTopRightRadius: 0,
+                            marginBottom: '1rem',
 
-                                // backgroundColor: '#d7a022',
-                                boxShadow: 'none',
-                                '&:hover': {
-                                    boxShadow: '0 1px 20px 1px black',
-                                    backgroundColor: '#d7a022'
-                                }
-                            }} >
-                                {icon1}  {iconTitle1}
-                            </Button>
-                        </Link>
+                            // backgroundColor: '#d7a022',
+                            boxShadow: 'none',
+                            '&:hover': {
+                                boxShadow: '0 1px 20px 1px black',
+                                backgroundColor: '#d7a022'
+                            }
+                        }} >
+                            {icon1}  {iconTitle1}
+                        </Button>
+                        {/* </Link> */}
                     </Box>
                 </MenuItem>}
-                {roles === 'credit_manager' && !show && <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
+                {/* {roles === 'credit_manager' && !show && <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
                     <Box sx={styles}>
-                        {/* <EmailOutline sx={{ marginRight: 2 }} /> */}
+                        
                         <Link href="/clients/history">
 
                             <Button variant='outlined' size='small' type='submit' sx={{
@@ -203,7 +203,8 @@ const UserDropdown = ({ icon2, icon1, iconTitle1, iconTitle2, handleClick, show 
                             </Button>
                         </Link>
                     </Box>
-                </MenuItem>}
+                </MenuItem>} */}
+
                 {roles === 'credit_manager' && !show && <MenuItem sx={{ p: 0 }} >
                     <Box sx={styles}>
                         <Stack direction="row" spacing={1} alignItems="center">

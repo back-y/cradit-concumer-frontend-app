@@ -1,18 +1,11 @@
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
-import Poll from 'mdi-material-ui/Poll'
 import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
-import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
-import BriefcaseVariantOutline from 'mdi-material-ui/BriefcaseVariantOutline'
-
-// ** Custom Components Imports
-import CardStatisticsVerticalComponent from 'src/@core/components/card-statistics/card-stats-vertical'
 
 // ** Styled Component Import
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 
 // ** Demo Components Imports
-import CreditTable from 'src/views/dashboard/CreditTable'
 import TrendingUp from 'mdi-material-ui/TrendingUp'
 import CellphoneLink from 'mdi-material-ui/CellphoneLink'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
@@ -21,36 +14,16 @@ import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import { useState, useEffect } from 'react'
 
-// ** MUI Imports
-import Tab from '@mui/material/Tab'
-import TabList from '@mui/lab/TabList'
-import TabPanel from '@mui/lab/TabPanel'
-import Button from '@mui/material/Button'
-import TabContext from '@mui/lab/TabContext'
-
 // import Typography from '@mui/material/Typography'
-
-import CardContent from '@mui/material/CardContent'
-import AddCustomer from 'src/views/form-layouts/AddCustomer'
 import StatisticsCard from 'src/views/dashboard/StatisticsCard'
-import CustomerTable from 'src/views/dashboard/CustomersTable'
 
 // import StatisticsCard from 'src/views/dashboard/StatisticsCard'
 import TableForCreditHistory from 'src/views/tables/TableForCreditHistory'
-import CustomerListWrapper from 'src/views/tables/CustomerListWrapper'
-import TableForRequestedCrdits from 'src/views/tables/TableForReqestedCredit'
-
 // import Credit from 'src/views/tables/Credit'
 
 import { addAuthUsers, getAuthUsers } from 'src/redux/feature/authSlice'
 import { useSelector, useDispatch } from 'react-redux'
-import { UserProvider } from 'src/lib/authContext'
-import jwtDecode from 'jwt-decode'
-import jwt from 'jsonwebtoken'
-import axios from 'axios'
-
-import ProtectedRoute from '../pages/login/Require'
-import BarsGraph from'./BarsGraph'
+import BarsGraph from './BarsGraph'
 import Err404 from 'src/pages/404'
 
 import Cookie from 'js-cookie'
@@ -59,30 +32,29 @@ import Cookie from 'js-cookie'
 
 const role = Cookie.get('role')
 
-
 // ========================================
 
 const salesData = [
   {
-    stats: '245k',
+    stats: '0 ETB',
     title: 'Total Credit Given',
     color: 'primary',
     icon: <TrendingUp sx={{ fontSize: '1.75rem' }} />
   },
   {
-    stats: '12.5k',
+    stats: '0 ETB',
     title: 'Total Credit Paid',
     color: 'success',
     icon: <AccountOutline sx={{ fontSize: '1.75rem' }} />
   },
   {
-    stats: '1.54k',
+    stats: '0 ETB',
     color: 'warning',
     title: 'Total Credit Unpaid',
     icon: <CellphoneLink sx={{ fontSize: '1.75rem' }} />
   },
   {
-    stats: '$88k',
+    stats: '0 ETB',
     color: 'info',
     title: 'Total Unpaid Credit With Interest',
     icon: <CurrencyUsd sx={{ fontSize: '1.75rem' }} />
@@ -134,7 +106,7 @@ const Credit = () => {
 
   const dispatch = useDispatch()
 
-  return role === "credit_manager" ?  (
+  return role === 'credit_manager' ? (
     <section>
       <Typography variant='h6' sx={{ marginBottom: 2 }}>
         <ApexChartWrapper>
@@ -143,14 +115,14 @@ const Credit = () => {
               <StatisticsCard
                 TotalAllowedAmount='Total credit allowed 48.5%'
                 emoji='😎 this month'
-                mainTitle='Your Coporates and Indivisuals Credit Status'
+                mainTitle='Your Corporates and Individuals Credit Status'
                 renderState={renderStats()}
                 names={name}
               />
             </Grid>
-            
+
             {/* ==================================================== */}
-            
+
             <Grid item xs={12} md={12}>
               <BarsGraph />
             </Grid>
@@ -160,14 +132,11 @@ const Credit = () => {
           </Grid>
         </ApexChartWrapper>
       </Typography>
-      
     </section>
-
-  ): (<Err404 />)
+  ) : (
+    <Err404 />
+  )
 }
-
-// ** Layout Import
-import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 // credit.getLayout = page => <BlankLayout>{page}</BlankLayout>
 

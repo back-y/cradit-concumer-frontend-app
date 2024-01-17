@@ -42,6 +42,8 @@ user();
 // import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { getCustomers, addCustomers } from 'src/redux/customerSlice'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/router'
 
 const statusObj = {
     // applied: { color: 'info' },
@@ -54,7 +56,13 @@ const statusObj = {
 
 const TableForCustemerList = () => {
 
+    const router = useRouter()
 
+    const handleClick = (e, id) => {
+        console.log('customer_id:', id)
+        Cookies.set('customer_id', id)
+        router.push('/customer-info')
+    }
 
 
     const [open, setOpen] = useState(false);
@@ -94,7 +102,7 @@ const TableForCustemerList = () => {
                 <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Invoice</TableCell>
+                            <TableCell>Name</TableCell>
                             <TableCell> paid Date</TableCell>
                             <TableCell>Phone</TableCell>
                             <TableCell>email</TableCell>
@@ -113,7 +121,7 @@ const TableForCustemerList = () => {
                                     </Box>
                                 </TableCell>
 
-                                <TableCell>{row.updatedAt}</TableCell>
+                                <TableCell>{row.updatedAt.slice(0, 10)}</TableCell>
                                 <TableCell>{row.phone}</TableCell>
                                 <TableCell>{row.email}</TableCell>
                                 <TableCell>{row.creditInfo + ' ETB'}</TableCell>
@@ -131,7 +139,7 @@ const TableForCustemerList = () => {
                                 </TableCell>
                                 <TableCell>
 
-                                    <DropDown iconTitle1="Home" iconTitle2="History" />
+                                    <DropDown iconTitle1="View" iconTitle2="History" handleClick={(e) => handleClick(e, row._id)} />
                                 </TableCell>
                             </TableRow>
                         ))}

@@ -59,7 +59,7 @@ export default function VerticalLinearStepper() {
             description: <LegalInfo activateParentButton={activateParentButton} />
         },
         {
-            label: 'TermsOfUse',
+            label: !role ? 'Terms Of Use' : 'Credit Info',
             description: <TermsOfUse />
         },
     ];

@@ -5,10 +5,10 @@ import Card from '@mui/material/Card';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const data = [
-    { name: 'Total Credit Given', Birr: 245 },
-    { name: 'Total Credit Paid', Birr: 125 },
-    { name: 'Total Credit Unpaid', Birr: 154 },
-    { name: 'Total Unpaid Credit With Interest', Birr: 88 },
+    { name: 'Total Credit Given', Birr: 0 },
+    { name: 'Total Credit Paid', Birr: 0 },
+    { name: 'Total Credit Unpaid', Birr: 0 },
+    { name: 'Total Unpaid Credit With Interest', Birr: 0 },
 ];
 
 

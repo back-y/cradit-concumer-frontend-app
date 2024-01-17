@@ -92,11 +92,11 @@ const CartItem = props => {
   }, [props])
 
   console.log("Items in editCart: ", props.items);
-  
+
   if (!props.items) {
     return <></>
   }
-  
+
   return products.map((item, index) => (
     <div key={index} className='row border-top border-bottom'>
       <div className='row main align-items-center'>
@@ -120,7 +120,7 @@ const CartItem = props => {
           </IconButton>
           <b style={{ margin: '1rem' }}> {itemsInCart[index].quantity} </b>
           <b style={{ margin: '1rem' }}> </b>
-          <IconButton
+          {/* <IconButton
             color='inherit'
             aria-haspopup='true'
             value='Add'
@@ -128,11 +128,11 @@ const CartItem = props => {
             onClick={e => onIncrease(e, itemsInCart[index]._id, itemsInCart[index].quantity, item.quantity)}
           >
             <b>+</b>
-          </IconButton>
+          </IconButton> */}
         </div>
         <div className='col'>
           ETB {item.price} / {item.unit}
-          
+
         </div>
 
       </div>
@@ -234,7 +234,7 @@ const YourCart = () => {
           selectedJsonObject[attribute] = jsonObject[attribute];
         }
       }
-      
+
       return selectedJsonObject;
     });
 
@@ -245,7 +245,7 @@ const YourCart = () => {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL + 'credit/status/'
 
   const handleCheckout = async () => {
-    
+
     const orderItems = orderPrep(["_id", "name", "price", "quantity"])
     let sum = 0;
     orderItems.forEach(item => { sum = sum + item.price * item.quantity })
@@ -253,7 +253,7 @@ const YourCart = () => {
     const updatedOrder = {
       products: orderItems,
       orderId: orderInCart._id,
-      editOrderId : Array(10).fill(null).map(() => Math.round(Math.random() * 16).toString(16)).join(''),
+      editOrderId: Array(10).fill(null).map(() => Math.round(Math.random() * 16).toString(16)).join(''),
       userId: orderInCart.userId,
       userName: orderInCart.userName,
       userEmail: orderInCart.userEmail,
@@ -272,10 +272,10 @@ const YourCart = () => {
         const url = baseUrl + resp.data._id
 
         const body = {
-          status: 'EDITED'
+          status: 'PROCESSED'
         }
-        axios
-          .patch(url, body)
+
+        axios.patch(url, body,)
           .then(resp => {
             console.log('Request EDITED!')
             setOpenConfirm(false)
@@ -374,7 +374,7 @@ const YourCart = () => {
                 </Box>
                 <Box sx={{ m: 1, position: 'relative' }}>
                   <Button variant='contained' sx={buttonSx} disabled={loading} onClick={handleCheckout}>
-                    CHECKOUT
+                    Edit
                   </Button>
                   {loading && (
                     <CircularProgress
@@ -394,7 +394,7 @@ const YourCart = () => {
             </div>
 
             {/* ==============================================spinner============================================== */}
-            
+
             <Snackbar
               open={open}
               autoHideDuration={6000}
@@ -402,7 +402,7 @@ const YourCart = () => {
               message='request has been send successfully'
 
             />
-            
+
           </div>
         </div>
       </div>
