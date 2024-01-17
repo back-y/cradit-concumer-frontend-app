@@ -260,16 +260,17 @@ const navigation = () => {
       icon: HistoryOutlinedIcon,
       path: '/credit/history'
     },
-    {
-      isAllowed: jwt,
-      sectionTitle: 'Cashier Departments'
-    },
-    {
-      isAllowed: jwt,
-      title: 'cashier',
-      icon: HomeOutline,
-      path: '/cashier'
-    },
+
+    // {
+    //   isAllowed: jwt,
+    //   sectionTitle: 'Cashier Departments'
+    // },
+    // {
+    //  isAllowed: jwt,
+    //  title: 'cashier',
+    // icon: HomeOutline,
+    //path: '/cashier'
+    //},//
     {
       sectionTitle: 'Pages'
     },

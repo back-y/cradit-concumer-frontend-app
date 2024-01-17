@@ -31,6 +31,7 @@ const fetchNames = async (orders) => {
             const url = process.env.NEXT_PUBLIC_API_URL + 'auth/' + order.userId;
             const resp = await axios.get(url);
             const user = resp.data;
+
             return user.name;
         })
     );
@@ -45,17 +46,18 @@ const TableForCreditHistory = () => {
     const token = Cookies.get('jwt')
     useEffect(async () => {
         const url = process.env.NEXT_PUBLIC_API_URL + 'order';
+
         const resp = await axios.get(url, {
             headers: {
-              Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token}`,
             },
-          });
+        });
 
         console.log("Resp data/ orders: ", resp.data);
         if (resp.data) {
             const filtered = resp.data.filter(order => (order.status === 'PAID' || order.status === 'REJECTED'));
             console.log('filtered', filtered);
-    
+
             setReqCredit(filtered);
         }
 
@@ -75,10 +77,12 @@ const TableForCreditHistory = () => {
     }, [reqCredit]);
 
     const dispatch = useDispatch()
+
     const dispatchOrder = (orderId) => {
         dispatch(addOrder(orderId))
     }
-    return (
+
+    return reqCredit.order ? (
         <Card>
             <TableContainer>
                 <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>
@@ -111,9 +115,6 @@ const TableForCreditHistory = () => {
                                         >
                                             {names[index]}
                                         </Typography>
-                                        {/* <Typography variant='caption'>
-                                            {row.designation}
-                                        </Typography> */}
                                     </Box>
                                 </TableCell>
 
@@ -151,7 +152,7 @@ const TableForCreditHistory = () => {
                 </Table>
             </TableContainer>
         </Card>
-    );
+    ) : (<> You have no history yet</>);
 };
 
 export default TableForCreditHistory;

@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import Chip from '@mui/material/Chip'
 import Table from '@mui/material/Table'
 import TableRow from '@mui/material/TableRow'
 import TableHead from '@mui/material/TableHead'
@@ -10,14 +9,6 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 import TableContainer from '@mui/material/TableContainer'
-import DotsVertical from 'mdi-material-ui/DotsVertical'
-
-import MenuItem from '@mui/material/MenuItem'
-import Select from '@mui/material/Select'
-import Button from '@mui/material/Button'
-import Link from 'next/link'
-import ProvideCredit from 'src/views/form-layouts/ProvideCredit'
-import { InputLabel } from '@mui/material'
 import DropDown from 'src/layouts/components/DropDown'
 
 import axios from 'axios'
@@ -67,6 +58,7 @@ const TableForCustemerList = () => {
         const filteredData = usersData.filter(user => user.pending === true)
 
         console.log('hello from filter')
+
         return filteredData;
     }
 
