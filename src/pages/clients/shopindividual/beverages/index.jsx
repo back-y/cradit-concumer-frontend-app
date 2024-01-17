@@ -155,7 +155,7 @@ const Shop = () => {
           <TabPanel value='1' sx={{ p: 0 }}>
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
               <Pagination
-                count={Math.ceil(productCount / 8)}
+                count={Math.ceil(products / 12)}
                 page={currentPage}
                 onChange={handlePageChange}
                 color='secondary'
@@ -182,7 +182,7 @@ const Shop = () => {
             </ApexChartWrapper>
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
               <Pagination
-                count={Math.ceil(productCount / 8)}
+                count={Math.ceil(products / 12)}
                 page={currentPage}
                 onChange={handlePageChange}
                 color='secondary'

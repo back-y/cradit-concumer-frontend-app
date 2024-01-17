@@ -151,7 +151,7 @@ const Shop = () => {
           <TabPanel value='1' sx={{ p: 0 }}>
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
               <Pagination
-                count={Math.ceil(productCount / 8)}
+                count={Math.ceil(productCount / 12)}
                 page={currentPage}
                 onChange={handlePageChange}
                 color='secondary'
