@@ -31,6 +31,7 @@ const fetchNames = async (orders) => {
             const url = process.env.NEXT_PUBLIC_API_URL + 'auth/' + order.userId;
             const resp = await axios.get(url);
             const user = resp.data;
+
             return user.name;
         })
     );
@@ -45,6 +46,7 @@ const TableForRequestedCredits = () => {
     useEffect(async () => {
         const token = Cookies.get('jwt')
         const url = process.env.NEXT_PUBLIC_API_URL + 'order';
+
         const resp = await axios.get(url, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -70,9 +72,11 @@ const TableForRequestedCredits = () => {
     }, [reqCredit]);
 
     const dispatch = useDispatch()
+
     const dispatchOrder = (orderId) => {
         dispatch(addOrder(orderId))
     }
+
     return (
         <Card>
             <TableContainer>
@@ -112,7 +116,7 @@ const TableForRequestedCredits = () => {
                                     </Box>
                                 </TableCell>
 
-                                <TableCell>{row.createdAt}</TableCell>
+                                <TableCell>{row.createdAt.slice(0, 10)}</TableCell>
                                 <TableCell>{row.totalPrice}</TableCell>
                                 <TableCell>{row.orderItems.length}</TableCell>
                                 <TableCell>

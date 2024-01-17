@@ -121,7 +121,7 @@ const DashboardTable = () => {
                                     </Box>
                                 </TableCell>
 
-                                <TableCell>{row.date}</TableCell>
+                                <TableCell>{row.date.slice(0, 10)}</TableCell>
                                 <TableCell>{row.salary}</TableCell>
                                 <TableCell>{row.age}</TableCell>
                                 <TableCell>

@@ -90,6 +90,7 @@ const TableForCustemerList = () => {
                             <TableCell> Phone</TableCell>
                             <TableCell>Email</TableCell>
                             <TableCell>Company</TableCell>
+                            <TableCell>Company</TableCell>
                             {/* <TableCell>Remaining credit Amount</TableCell> */}
                             {/* <TableCell>Status</TableCell> */}
                             <TableCell>Action</TableCell>
@@ -108,6 +109,7 @@ const TableForCustemerList = () => {
                                 <TableCell>{row.phone}</TableCell>
                                 <TableCell>{row.email}</TableCell>
                                 <TableCell>{row.company}</TableCell>
+                                <TableCell>{row.createdAt.slice(0, 10)}</TableCell>
                                 {/* <TableCell>{row.RCA}</TableCell> */}
                                 {/* <TableCell>
                                     <Chip

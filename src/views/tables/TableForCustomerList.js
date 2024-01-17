@@ -121,7 +121,7 @@ const TableForCustemerList = () => {
                                     </Box>
                                 </TableCell>
 
-                                <TableCell>{row.updatedAt}</TableCell>
+                                <TableCell>{row.updatedAt.slice(0, 10)}</TableCell>
                                 <TableCell>{row.phone}</TableCell>
                                 <TableCell>{row.email}</TableCell>
                                 <TableCell>{row.creditInfo + ' ETB'}</TableCell>

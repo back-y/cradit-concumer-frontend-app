@@ -261,7 +261,7 @@ const TableForRequestedCredits = () => {
                                     </Box>
                                 </TableCell>
 
-                                <TableCell>{row.createdAt}</TableCell>
+                                <TableCell>{row.createdAt.slice(0, 10)}</TableCell>
                                 <TableCell>{row.totalPrice}</TableCell>
                                 <TableCell>{row.orderItems.length}</TableCell>
                                 <TableCell>
