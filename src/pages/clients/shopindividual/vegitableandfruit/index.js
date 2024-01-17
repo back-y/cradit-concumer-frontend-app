@@ -183,7 +183,7 @@ const Shop = () => {
                         </ApexChartWrapper>
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
                             <Pagination
-                                count={Math.ceil(products / 12)}
+                                count={Math.ceil(products.length / 12)}
                                 page={currentPage}
                                 onChange={handlePageChange}
                                 color='secondary'
