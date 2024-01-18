@@ -260,6 +260,12 @@ const navigation = () => {
       icon: HistoryOutlinedIcon,
       path: '/credit/history'
     },
+    {
+      isAllowed: true,
+      title: 'Chat',
+      icon: HistoryOutlinedIcon,
+      path: '/comment/chat'
+    },
 
     // {
     //   isAllowed: jwt,
