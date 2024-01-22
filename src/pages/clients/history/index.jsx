@@ -41,25 +41,25 @@ const jwt = Cookie.get('jwt')
 
 const salesData = [
   {
-    stats: '245k',
-    title: 'Total Credit Allowed',
+    stats: '0 ETB',
+    title: 'Total Credit Given',
     color: 'primary',
     icon: <TrendingUp sx={{ fontSize: '1.75rem' }} />
   },
   {
-    stats: '12.5k',
-    title: 'Total Credit Used',
+    stats: '0 ETB',
+    title: 'Total Credit Paid',
     color: 'success',
     icon: <AccountOutline sx={{ fontSize: '1.75rem' }} />
   },
   {
-    stats: '1.54k',
+    stats: '0 ETB',
     color: 'warning',
     title: 'Total Credit Unpaid',
     icon: <CellphoneLink sx={{ fontSize: '1.75rem' }} />
   },
   {
-    stats: '$88k',
+    stats: '0 ETB',
     color: 'info',
     title: 'Total Unpaid Credit With Interest',
     icon: <CurrencyUsd sx={{ fontSize: '1.75rem' }} />
@@ -101,7 +101,7 @@ const History = () => {
     setValue(newValue)
   }
 
-  return  role === "customer" ? (
+  return role === 'customer' ? (
     <section>
       <TabContext value={value}>
         <TabList onChange={handleChange} aria-label='card navigation example'>
@@ -115,14 +115,16 @@ const History = () => {
                 <Grid container spacing={6}>
                   <Grid item xs={12} md={12}>
                     <StatisticsCard
-                      TotalAllowedAmount='Total credit allowed 48.5%'
+                      TotalAllowedAmount='Total credit allowed 0 ETB'
                       emoji='😎 this month'
                       mainTitle='Your Credit History'
                       renderState={renderStats()}
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <Typography>Pending Credit Request</Typography>
+                    <Typography variant='h6' sx={{ marginBottom: 2 }}>
+                      Credit List{' '}
+                    </Typography>
                     <Credits />
                   </Grid>
                 </Grid>
@@ -134,19 +136,17 @@ const History = () => {
               Credit History
             </Typography>
             <TableForCreditHistory />
-            <Typography variant='body2' sx={{ marginBottom: 4 }}>
-              Dragée chupa chups soufflé cheesecake jelly tootsie roll cupcake marzipan. Carrot cake sweet roll gummi
-              bears caramels jelly beans.
-            </Typography>
-            <Grid item xs={12}>
+
+            {/* <Grid item xs={12}>
               <TableForCreditHistory />
-            </Grid>
-            <Button variant='contained'>Button Two</Button>
+            </Grid> */}
           </TabPanel>
         </CardContent>
       </TabContext>
     </section>
-  ): (<Err404 />)
+  ) : (
+    <Err404 />
+  )
 }
 
 // ** Layout Import

@@ -32,6 +32,7 @@ import CarRentalIcon from '@mui/icons-material/CarRental';
 import CheckroomIcon from '@mui/icons-material/Checkroom';
 import KebabDiningIcon from '@mui/icons-material/KebabDining';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import ForumIcon from '@mui/icons-material/Forum';
 
 
 import { yellow } from '@mui/material/colors';
@@ -147,7 +148,7 @@ const navigation = () => {
     },
     {
       isAllowed: customerType === 'individual',
-      title: 'Admin',
+      title: 'Home',
       icon: HomeOutline,
       path: '/admin'
     },
@@ -163,7 +164,7 @@ const navigation = () => {
     },
     {
       isAllowed: roles === 'customer',
-      title: 'Clients',
+      title: 'Home',
       icon: HomeOutline,
       path: '/clients'
     },
@@ -220,7 +221,7 @@ const navigation = () => {
     },
     {
       isAllowed: roles === 'credit_manager',
-      title: 'Credit Department',
+      title: 'Home',
       icon: HomeOutline,
       path: '/credit'
     },
@@ -263,7 +264,7 @@ const navigation = () => {
     {
       isAllowed: true,
       title: 'Chat',
-      icon: HistoryOutlinedIcon,
+      icon: ForumIcon,
       path: '/comment/chat'
     },
 

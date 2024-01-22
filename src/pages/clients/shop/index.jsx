@@ -76,7 +76,6 @@ const Products = props => {
           stock={item.quantity}
           unit={item.unit}
         />
-        
       </Grid>
     ))
   }
@@ -104,7 +103,7 @@ const Shop = () => {
   const products = useSelector(getProducts)
   const itemsInCart = useSelector(getItemsInCart)
 
-  return role === "customer" ?  (
+  return role === 'customer' ? (
     <section>
       <TabContext value={value}>
         <TabList onChange={handleChange} aria-label='card navigation example'>
@@ -126,9 +125,9 @@ const Shop = () => {
               </Grid>
             </ApexChartWrapper>
           </TabPanel>
-          
+
           {/* ================================================================ */}
-          
+
           <TabPanel value='2' sx={{ p: 0 }}>
             <Typography variant='body2' sx={{ marginBottom: 4 }}>
               Here are your selected Items
@@ -138,7 +137,9 @@ const Shop = () => {
         </CardContent>
       </TabContext>
     </section>
-  ): (<Err404 />)
+  ) : (
+    <Err404 />
+  )
 }
 
 // shop.getLayout = page => <BlankLayout>{page}</BlankLayout>

@@ -19,6 +19,7 @@ import StatisticsCard from 'src/views/dashboard/StatisticsCard'
 
 // import StatisticsCard from 'src/views/dashboard/StatisticsCard'
 import TableForCreditHistory from 'src/views/tables/TableForCreditHistory'
+
 // import Credit from 'src/views/tables/Credit'
 
 import { addAuthUsers, getAuthUsers } from 'src/redux/feature/authSlice'
@@ -113,9 +114,9 @@ const Credit = () => {
           <Grid container spacing={6}>
             <Grid item xs={12} md={12}>
               <StatisticsCard
-                TotalAllowedAmount='Total credit allowed 48.5%'
+                TotalAllowedAmount='Total credit allowed 0 ETB'
                 emoji='😎 this month'
-                mainTitle='Your Corporates and Individuals Credit Status'
+                mainTitle='Your Corporate and Individuals Credit Status'
                 renderState={renderStats()}
                 names={name}
               />

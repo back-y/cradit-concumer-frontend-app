@@ -137,7 +137,8 @@ const Shop = () => {
   const customer = Cookies.get('customerType')
   const role = Cookies.get('role')
 
-  console.log("Product Count for pagination: ", productCount)
+  console.log('Product Count for pagination: ', productCount)
+
   return !role && customer === 'individual' ? (
     <section>
       <Search searchQuery={searchQuery} handleSearchChange={handleSearchChange} sx={{ innerWidth: '50%' }} />
