@@ -33,6 +33,7 @@ import { addItemToCart, addOrderToCart } from 'src/redux/editCartSlice'
 import { addOrderToComment, getOrderInComment } from 'src/redux/commentSlice'
 import { useRouter } from 'next/router'
 import EditedInvoice from './editedInvoice'
+// import Cookies from 'js-cookie'
 
 const statusObj = {
   REJECTED: { color: 'error' },
@@ -72,6 +73,7 @@ const Invoice = () => {
   // ===fetch dtas states====
   const [orderItems, setOrderItems] = useState([])
   const [eorderItems, setEorderItems] = useState([])
+  const [ord, setOrd] = useState([])
 
   const [eorder, setEorder] = useState({})
 
@@ -112,6 +114,7 @@ const Invoice = () => {
 
     // *********
     setOrderItems(order.orderItems)
+    setOrd(order)
     const userId = order.userId
     const userUrl = process.env.NEXT_PUBLIC_API_URL + 'auth/' + userId
     const resp = await axios.get(userUrl)
@@ -122,6 +125,7 @@ const Invoice = () => {
   }
   console.log('Order: ', order)
   console.log('Order Items: ', orderItems)
+  console.log('Order Items iddddd: ', order._id)
 
   useEffect(() => {
     fetchData()
@@ -332,7 +336,7 @@ const Invoice = () => {
     const res = resp.data.find(credit => credit.orderId === order._id)
     const creditId = res._id
 
-    cookies.set('creditId', creditId)
+    Cookies.set('creditId', creditId)
 
     const formData = new FormData()
     formData.append('file', imgPaid)
@@ -589,10 +593,10 @@ const Invoice = () => {
                 )}
                 <div className='tm_invoice_info_list tm_white_color'>
                   <p className='tm_invoice_number tm_m0'>
-                    Invoice No: <b>#LL93784</b>
+                    Invoice No: <b>{order._id}</b>
                   </p>
                   <p className='tm_invoice_date tm_m0'>
-                    Date: <b>01.07.2023</b>
+                    Date: <b>{order.createdAt.slice(0, 10)}</b>
                   </p>
                 </div>
                 <div className='tm_invoice_seperator tm_accent_bg'></div>
@@ -665,10 +669,7 @@ const Invoice = () => {
                     <p className='tm_mb2'>
                       <b className='tm_primary_color'>Payment info:</b>
                     </p>
-                    <p className='tm_m0'>
-                      Credit Card - 236***********928 <br />
-                      Amount: {order.totalPrice} ETB
-                    </p>
+                    <p className='tm_m0'>Amount: {order.totalPrice} ETB</p>
                   </div>
                   <div className='tm_right_footer'>
                     <table className='tm_mb15'>
@@ -681,7 +682,9 @@ const Invoice = () => {
                           <td className='tm_width_3 tm_primary_color'>
                             Tax <span className='tm_ternary_color'>(5%)</span>
                           </td>
-                          <td className='tm_width_3 tm_primary_color tm_text_right'>{order.totalPrice * 0.05} ETB</td>
+                          <td className='tm_width_3 tm_primary_color tm_text_right'>
+                            {(order.totalPrice * 0.05).toFixed(2)} ETB
+                          </td>
                         </tr>
                         <tr className='tm_accent_bg'>
                           <td className='tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_white_color'>Grand Total </td>
@@ -698,8 +701,8 @@ const Invoice = () => {
                   <div className='tm_right_footer'>
                     <div className='tm_sign tm_text_center'>
                       <img src='assets/img/sign.svg' alt='Sign' />
-                      <p className='tm_m0 tm_ternary_color'>Abebe Chala</p>
-                      <p className='tm_m0 tm_f16 tm_primary_color'>Accounts Manager</p>
+                      <p className='tm_m0 tm_ternary_color'>{name}</p>
+                      <p className='tm_m0 tm_f16 tm_primary_color'>{roles}</p>
                     </div>
                   </div>
                 </div>

@@ -34,18 +34,17 @@ const CartItem = props => {
   if (!props.items) {
     return <></>
   } else {
-    const onRemove = (id) => {
-        const filterFunction = (jsonDataObject) => jsonDataObject.id != id;
-        const itemsAfterRemove = itemsInCart.filter(filterFunction);
-        console.log(itemsAfterRemove)
-        dispatch(addItemToCart(itemsAfterRemove))
+    const onRemove = id => {
+      const filterFunction = jsonDataObject => jsonDataObject.id != id
+      const itemsAfterRemove = itemsInCart.filter(filterFunction)
+      console.log(itemsAfterRemove)
+      dispatch(addItemToCart(itemsAfterRemove))
     }
 
     const onDecrease = (e, id, amount) => {
       const index = itemsInCart.findIndex(item => item.id === id)
       const itemToUpdate = itemsInCart[index]
-      if (amount > 1) 
-        amount = amount - 1
+      if (amount > 1) amount = amount - 1
 
       const updatedItem = {
         ...itemToUpdate,
@@ -74,7 +73,7 @@ const CartItem = props => {
 
     // useEffect(() => {}, [props.items])
 
-    return  props.items.map((item, index) => (
+    return props.items.map((item, index) => (
       <div key={index} className='row border-top border-bottom'>
         <div className='row main align-items-center'>
           <div className='col-2'>
@@ -109,12 +108,13 @@ const CartItem = props => {
           </div>
           <div className='col'>
             ETB {item.price * item.amount} / {item.unit}
-            <IconButton className='close' onClick={() => onRemove(item.id)}>&#10005;</IconButton>
+            <IconButton className='close' onClick={() => onRemove(item.id)}>
+              &#10005;
+            </IconButton>
           </div>
         </div>
       </div>
     ))
-   
   }
 }
 
@@ -173,29 +173,32 @@ const YourCart = () => {
     }
   }, [])
 
-  const orderPrep = (attributes) => {
+  const orderPrep = attributes => {
     const order = {
       orderItems: [],
-      editOrderId: Array(10).fill(null).map(() => Math.round(Math.random() * 16).toString(16)).join('')
+      editOrderId: Array(10)
+        .fill(null)
+        .map(() => Math.round(Math.random() * 16).toString(16))
+        .join('')
     }
 
     const orderItems = itemsInCart.map(jsonObject => {
-      const selectedJsonObject = {};
+      const selectedJsonObject = {}
       for (const attribute of attributes) {
-        if (attribute === "_id") {
-          selectedJsonObject[attribute] = jsonObject["id"];
+        if (attribute === '_id') {
+          selectedJsonObject[attribute] = jsonObject['id']
         }
-        if (attribute === "quantity") {
-          selectedJsonObject[attribute] = jsonObject["amount"];
+        if (attribute === 'quantity') {
+          selectedJsonObject[attribute] = jsonObject['amount']
         }
         if (attribute in jsonObject) {
-          selectedJsonObject[attribute] = jsonObject[attribute];
+          selectedJsonObject[attribute] = jsonObject[attribute]
         }
       }
-      return selectedJsonObject;
-    });
-    order.orderItems = orderItems;
-    return order;
+      return selectedJsonObject
+    })
+    order.orderItems = orderItems
+    return order
   }
 
   const onRemoveAll = () => {
@@ -210,63 +213,60 @@ const YourCart = () => {
   const router = useRouter()
 
   const handleCheckout = async () => {
-
     // console.log("Items in Cart: ", itemsInCart)
-    const order = orderPrep(["_id", "name", "price", "quantity"])
-    console.log("Order: ", order)
-    const customerType = Cookies.get('customerType');
-    
+    const order = orderPrep(['_id', 'name', 'price', 'quantity'])
+    console.log('Order: ', order)
+    const customerType = Cookies.get('customerType')
+    const jwt = Cookies.get('jwt')
+
     if (customerType === 'corporate') {
-      
-      const orderUrl = process.env.NEXT_PUBLIC_API_URL + 'order';
+      const orderUrl = process.env.NEXT_PUBLIC_API_URL + 'order'
 
-      await axios.post(orderUrl, order, {withCredentials: true})
-      .then((response) => {
-        console.log('Order response:', response.data);
-        setTimeout(() => onRemoveAll(), 3000);
+      await axios
+        .post(orderUrl, order, { withCredentials: true })
+        .then(response => {
+          console.log('Order response:', response.data)
+          setTimeout(() => onRemoveAll(), 3000)
 
-        if (!jwt) {
-          route.push('/clients/shopindividual')
-        } else if (response.data.status === "success" && jwt) {
-          route.push('/clients/shop')
-        }
-
-      })
-      .catch((error) => {
-        console.log('Order Error:', error);
-        setTimeout(() => onRemoveAll(), 3000);
-      });
-    }
-    else {
+          if (!jwt) {
+            route.push('/clients/shopindividual')
+          } else if (response.data.status === 'success' && jwt) {
+            route.push('/clients/shop')
+          }
+        })
+        .catch(error => {
+          console.log('Order Error:', error)
+          setTimeout(() => onRemoveAll(), 3000)
+        })
+    } else {
       const orderUrl = process.env.NEXT_PUBLIC_API_URL + 'individual/order'
       const individualOrder = {
         orderItems: order.orderItems
       }
-      await axios.post(orderUrl, individualOrder)
-      .then((response) => {
-        console.log('Order response:', response.data);
-        const respUrl = response.data.response_url
-        
-        // if (response.data.message === 'Data received successfully!'){
+      await axios
+        .post(orderUrl, individualOrder)
+        .then(response => {
+          console.log('Order response:', response.data)
+          const respUrl = response.data.response_url
+
+          // if (response.data.message === 'Data received successfully!'){
           // router.push('/clients/shopindividual/pending')
           router.push(respUrl)
-        // }
-        
-        setTimeout(() => onRemoveAll(), 3000);
+          // }
 
-        // if (!jwt) {
-        //   route.push('/clients/shopindividual')
-        // } else if (response.data.status === "success" && jwt) {
-        //   route.push('/clients/shop')
-        // }
+          setTimeout(() => onRemoveAll(), 3000)
 
-      })
-      .catch((error) => {
-        console.log('Order Error:', error);
-        setTimeout(() => onRemoveAll(), 3000);
-      });
+          // if (!jwt) {
+          //   route.push('/clients/shopindividual')
+          // } else if (response.data.status === "success" && jwt) {
+          //   route.push('/clients/shop')
+          // }
+        })
+        .catch(error => {
+          console.log('Order Error:', error)
+          setTimeout(() => onRemoveAll(), 3000)
+        })
     }
-    
 
     if (!loading) {
       setSuccess(false)
@@ -281,7 +281,7 @@ const YourCart = () => {
 
   // ===============spinner==============
 
-  return  itemsInCart.length > 0? (
+  return itemsInCart.length > 0 ? (
     <section className='bdy'>
       <div className='card'>
         <div className='row'>
@@ -290,9 +290,9 @@ const YourCart = () => {
               <div className='row'>
                 <div className='col'>
                   <h4>
-                  <Typography variant='body2' sx={{ marginBottom: 4 }}>
-              Here are your selected Item(s)
-            </Typography>
+                    <Typography variant='body2' sx={{ marginBottom: 4 }}>
+                      Here are your selected Item(s)
+                    </Typography>
                   </h4>
                 </div>
                 <div className='col align-self-center text-right text-muted'>{itemsInCart.length} items</div>
@@ -359,8 +359,8 @@ const YourCart = () => {
                 <Box sx={{ m: 1, position: 'relative' }}>
                   <Button variant='contained' sx={buttonSx} disabled={loading} onClick={handleCheckout}>
                     CHECKOUT
-                  </Button> 
-                
+                  </Button>
+
                   {loading && (
                     <CircularProgress
                       size={24}
@@ -392,9 +392,11 @@ const YourCart = () => {
         </div>
       </div>
     </section>
-  ) : (<>
-  <h2>Your cart is empty please select an Item</h2>
-    </>)
+  ) : (
+    <>
+      <h2>Your cart is empty please select an Item</h2>
+    </>
+  )
 }
 
 export default YourCart

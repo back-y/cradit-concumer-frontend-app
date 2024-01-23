@@ -82,7 +82,7 @@ const TableForCreditHistory = () => {
         dispatch(addOrder(orderId))
     }
 
-    return reqCredit.order ? (
+    return reqCredit ? (
         <Card>
             <TableContainer>
                 <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>

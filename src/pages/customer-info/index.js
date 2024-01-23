@@ -177,17 +177,17 @@ const CustomGallery = () => {
                         <div className='tm_card_note tm_mobile_hide' style={{ display: 'flex' }} >
                             <h6 className='tm_primary_color'>Company: </h6>&nbsp;&nbsp; <span> <h6 style={{ color: 'red' }}> {userInfos.company}</h6></span>
                         </div>
-                        <div className='tm_card_note tm_mobile_hide' style={{ display: 'flex' }} >
+                        {userInfos.updatedAt && (<div className='tm_card_note tm_mobile_hide' style={{ display: 'flex' }} >
                             <h6 className='tm_primary_color'>Approval date: </h6>&nbsp;&nbsp; <span> <h6 style={{ color: 'red' }}> {userInfos.updatedAt.slice(0, 10)
                             }</h6></span>
-                        </div>
+                        </div>)}
                     </div>
 
                     <div className='tm_invoice_seperator tm_accent_bg'></div>
                 </div>
 
             </Grid>
-            <Grid container spacing={2}>
+            {images.length > 0 && (<Grid container spacing={2} style={{ width: '100%' }}>
                 <Gallery
                     items={images.map((image) => ({
                         original: image,
@@ -199,7 +199,7 @@ const CustomGallery = () => {
                     startIndex={currentIndex}
                     onSlide={handleSlide}
                 />
-            </Grid>
+            </Grid>)}
             {/* Download and Print Buttons */}
             <Grid container spacing={2}>
                 <Button variant="contained" color="primary" onClick={handleDownload}>

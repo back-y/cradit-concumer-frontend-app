@@ -189,6 +189,7 @@ const TableForRequestedCredits = () => {
 
     useEffect(async () => {
         const token = Cookies.get('jwt')
+        const role = Cookies.get('role')
         const url = process.env.NEXT_PUBLIC_API_URL + 'order';
 
         const resp = await axios.get(url, {
@@ -198,10 +199,11 @@ const TableForRequestedCredits = () => {
         });
 
         console.log(resp.data);
-        const filtered = resp.data.filter(order => order.status === 'ACCEPTED');
+        const filtered = resp.data.filter(order => order.status === 'ACCEPTED' || order.status === 'PENDING');
+        const filtered2 = resp.data.filter(order => order.status === 'ACCEPTED');
         console.log('filtered', filtered);
 
-        setReqCredit(filtered);
+        role === 'customer' ? setReqCredit(filtered) : setReqCredit(filtered2);
     }, []);
 
     const [names, setNames] = useState([]); ([]);
@@ -221,7 +223,7 @@ const TableForRequestedCredits = () => {
         dispatch(addOrder(orderId))
     }
 
-    return reqCredit.length > 0 ? (
+    return reqCredit && reqCredit.length > 0 ? (
 
         <Card>
             <TableContainer>
