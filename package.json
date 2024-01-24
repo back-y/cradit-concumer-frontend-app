@@ -52,13 +52,16 @@
     "@mui/lab": "^5.0.0-alpha.70",
     "@mui/material": "^5.14.11",
     "@mui/x-charts": "^6.18.3",
+    "@mui/x-data-grid": "^6.19.1",
     "@popperjs/core": "^2.11.2",
     "@reduxjs/toolkit": "^1.9.6",
     "@talkjs/react": "^0.1.5",
     "apexcharts-clevision": "3.28.5",
-    "axios": "^1.5.1",
+    "axios": "^1.6.5",
     "babel-eslint": "^10.1.0",
     "clsx": "^1.1.1",
+    "file-saver": "^2.0.5",
+    "html2canvas": "^1.4.1",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
@@ -81,7 +84,8 @@
     "react-to-print": "^2.14.15",
     "recharts": "^2.10.3",
     "stylis": "^3.5.4",
-    "talkjs": "^0.18.0"
+    "talkjs": "^0.18.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "eslint": "^7.32.0",

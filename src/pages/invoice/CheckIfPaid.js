@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Grid, Typography, Card, CardContent, CardMedia, IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-
-import Approve from 'src/pages/pages/steper/Approve';
-import Cookies from 'js-cookie';
+import React, { useEffect, useState, useRef } from 'react';
+import { Box, Grid, Typography, Card, CardContent, CardMedia, Button } from "@mui/material";
 import axios from 'axios';
 import { getOrder } from 'src/redux/orderSlice';
 import { useSelector } from 'react-redux';
 
 const CheckIfPaid = () => {
 
+    // const [images, setImages] = useState([])
+
+    // const [currentIndex, setCurrentIndex] = useState(0);
+    const imageRef = useRef();
 
     const [image, setImage] = useState('')
     const [userInfos, setUserInfos] = useState([])
@@ -44,22 +44,50 @@ const CheckIfPaid = () => {
     }, [])
 
 
+    const handleDownload = () => {
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = `image_${image + 1}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    const handlePrint = () => {
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write('<html><head><title>Print</title></head><body>');
+        printWindow.document.write(`<img src="${image + 1}" style="max-width: 100%;" />`);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    };
+
+
     return (
         <div>
 
             <Grid container spacing={2}>
                 {/* {images.map((image, key) => ( */}
                 <Grid style={{ width: '100%' }} >
-                    <Card>
-                        <CardContent>
+                    <Card style={{ width: '100%' }} >
+                        <CardContent style={{ width: '100%' }} >
                             <CardMedia
-                                style={{ height: 600, width: 400, marginRight: 0, }}
+                                style={{ height: 600, width: '100%', marginRight: 0, content: 'center' }}
                                 component="img"
                                 image={image}
                                 sx={{ objectFit: "contain", display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}
                             />
                         </CardContent>
                     </Card>
+                </Grid>
+                <Grid spacing={2} sx={12} style={{ width: '100%' }}>
+                    <Button variant="contained" color="primary" onClick={handleDownload}>
+                        Download
+                    </Button>
+
+                    <Button variant="contained" color="secondary" onClick={handlePrint} style={{ marginLeft: '10px' }}>
+                        Print
+                    </Button>
                 </Grid>
                 {/* ))} */}
                 {/* <Approve /> */}

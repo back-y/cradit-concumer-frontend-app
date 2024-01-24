@@ -63,8 +63,8 @@ const CustomGallery = () => {
     printWindow.document.write('<html><head><title>Print</title></head><body>');
     printWindow.document.write(`<img src="${images[currentIndex]}" style="max-width: 100%;" />`);
     printWindow.document.write('</body></html>');
-    printWindow.document.close();
     printWindow.print();
+    printWindow.document.close();
   };
 
   return (
@@ -93,8 +93,9 @@ const CustomGallery = () => {
         </div>
 
       </Grid>
-      <Grid container spacing={2}>
-        <Gallery
+      <Grid spacing={2} sx={12} style={{ width: '100%' }}>
+        <Gallery sx={12}
+          style={{ width: '100%' }}
           items={images.map((image) => ({
             original: image,
             thumbnail: image,
@@ -107,7 +108,7 @@ const CustomGallery = () => {
         />
       </Grid>
       {/* Download and Print Buttons */}
-      <Grid container spacing={2}>
+      <Grid spacing={2} sx={12} style={{ width: '100%' }}>
         <Button variant="contained" color="primary" onClick={handleDownload}>
           Download
         </Button>

@@ -197,24 +197,25 @@ const navigation = () => {
       icon: FactCheckOutlinedIcon,
       path: '/warehouse/everyOrdersList'
     },
-    {
-      isAllowed: roles === 'warehouse_manager',
-      title: 'Add New Products',
-      icon: QueueIcon,
-      path: '/warehouse/addNewProducts'
-    },
-    {
-      isAllowed: roles === 'warehouse_manager',
-      title: 'Products List',
-      icon: Table,
-      path: '/warehouse/productlist'
-    },
-    {
-      isAllowed: roles === 'warehouse_manager',
-      title: 'Returned Products List',
-      icon: LowPriorityOutlinedIcon,
-      path: '/warehouse/returned'
-    },
+
+    // {
+    //   isAllowed: roles === 'warehouse_manager',
+    //   title: 'Add New Products',
+    //   icon: QueueIcon,
+    //   path: '/warehouse/addNewProducts'
+    // },
+    // {
+    //   isAllowed: roles === 'warehouse_manager',
+    //   title: 'Products List',
+    //   icon: Table,
+    //   path: '/warehouse/productlist'
+    // },
+    // {
+    //   isAllowed: roles === 'warehouse_manager',
+    //   title: 'Returned Products List',
+    //   icon: LowPriorityOutlinedIcon,
+    //   path: '/warehouse/returned'
+    // },
     {
       isAllowed: roles === 'credit_manager',
       sectionTitle: 'Credit Department'
@@ -227,15 +228,15 @@ const navigation = () => {
     },
     {
       isAllowed: roles === 'credit_manager',
-      title: 'Customer List',
-      icon: RecentActorsIcon,
-      path: '/credit/customerList'
-    },
-    {
-      isAllowed: roles === 'credit_manager',
       title: 'New Users List',
       icon: RecentActorsOutlinedIcon,
       path: '/credit/newUsersList'
+    },
+    {
+      isAllowed: roles === 'credit_manager',
+      title: 'Customer List',
+      icon: RecentActorsIcon,
+      path: '/credit/customerList'
     },
     {
       isAllowed: roles === 'credit_manager',
@@ -251,7 +252,7 @@ const navigation = () => {
     },
     {
       isAllowed: roles === 'credit_manager',
-      title: 'Credit',
+      title: 'Accepted Credit',
       icon: AddCardOutlinedIcon,
       path: '/credit/credit'
     },

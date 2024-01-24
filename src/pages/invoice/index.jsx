@@ -353,6 +353,7 @@ const Invoice = () => {
       const imgPostResp = await axios.post(receiptUrl, formData)
       console.log('Receipt upload success: ', imgPostResp)
       handlePaid()
+      setOpen(false)
     } catch (err) {
       console.log('Erro in uploading receipt', err)
     }
@@ -528,7 +529,7 @@ const Invoice = () => {
               </Button>
             )}
 
-            {roles === 'credit_manager' && order.status === 'ACCEPTED' && (
+            {roles === 'credit_manager' && order.status === 'ACCEPTED' && order.status === 'PROCESSED' && (
               <Button onClick={handlePaid} autoFocus>
                 Confirm
               </Button>
@@ -991,7 +992,7 @@ const Invoice = () => {
                   </Button>
                 )}
 
-                {roles === 'credit_manager' && order.status === 'ACCEPTED' && (
+                {roles === 'credit_manager' && order.status === 'ACCEPTED' && order.status === 'PROCESSED' && (
                   <Button onClick={handlePaid} autoFocus>
                     Confirm
                   </Button>
@@ -1039,10 +1040,10 @@ const Invoice = () => {
                     </div>
                     <div className='tm_invoice_info_list tm_white_color'>
                       <p className='tm_invoice_number tm_m0'>
-                        Invoice No: <b>#LL93784</b>
+                        Invoice No: <b>{eorder._id}</b>
                       </p>
                       <p className='tm_invoice_date tm_m0'>
-                        Date: <b>01.07.2023</b>
+                        Date: <b>{eorder.createdAt.slice(0, 10)}</b>
                       </p>
                     </div>
                     <div className='tm_invoice_seperator tm_accent_bg'></div>
@@ -1050,13 +1051,13 @@ const Invoice = () => {
                   <div className='tm_invoice_head tm_mb10'>
                     <div className='tm_invoice_left'>
                       <p className='tm_mb2'>
-                        <b className='tm_primary_color'>Invoice To: {euser.ename}</b>
+                        <b className='tm_primary_color'>Invoice To: {eorder.userName}</b>
                       </p>
                       <p>
                         Client <br />
                         Somewhere, Addis Abeba <br />
                         Ethiopia <br />
-                        {euser.eemail}
+                        {eorder.userEmail}
                       </p>
                     </div>
                     <div className='tm_invoice_right tm_text_right'>
@@ -1116,7 +1117,7 @@ const Invoice = () => {
                           <b className='tm_primary_color'>Payment info:</b>
                         </p>
                         <p className='tm_m0'>
-                          Credit Card - 236***********928 <br />
+                          {/* Credit Card - 236***********928 <br /> */}
                           Amount: {eorder.totalPrice} ETB
                         </p>
                       </div>
@@ -1134,13 +1135,13 @@ const Invoice = () => {
                                 Tax <span className='tm_ternary_color'>(5%)</span>
                               </td>
                               <td className='tm_width_3 tm_primary_color tm_text_right'>
-                                {eorder.totalPrice * 0.05} ETB
+                                {(eorder.totalPrice * 0.05).toFixed(2)} ETB
                               </td>
                             </tr>
                             <tr className='tm_accent_bg'>
                               <td className='tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_white_color'>Grand Total </td>
                               <td className='tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_white_color tm_text_right'>
-                                {eorder.totalPrice + eorder.totalPrice * 0.05} ETB
+                                {(eorder.totalPrice + eorder.totalPrice * 0.05).toFixed(2)} ETB
                               </td>
                             </tr>
                           </tbody>
@@ -1152,8 +1153,8 @@ const Invoice = () => {
                       <div className='tm_right_footer'>
                         <div className='tm_sign tm_text_center'>
                           <img src='assets/img/sign.svg' alt='Sign' />
-                          <p className='tm_m0 tm_ternary_color'>Abebe Chala</p>
-                          <p className='tm_m0 tm_f16 tm_primary_color'>Accounts Manager</p>
+                          <p className='tm_m0 tm_ternary_color'>{name}</p>
+                          <p className='tm_m0 tm_f16 tm_primary_color'>{roles}</p>
                         </div>
                       </div>
                     </div>
@@ -1223,36 +1224,30 @@ const Invoice = () => {
                 </button>
                 <Box>
                   <Grid container>
-                    {roles === 'credit_manager' &&
-                      eorder.status !== 'REJECTED' &&
-                      eorder.status !== 'ACCEPTED' &&
-                      eorder.status !== 'PAID' && (
-                        <Button
-                          className='tm_invoice_btn tm_color2'
-                          style={{ color: 'black', width: '100%' }}
-                          onClick={() => {
-                            handleOpenConfirm()
-                            changer2()
-                          }}
-                        >
-                          Accept <span className='tm_btn_text'>Accept</span>
-                        </Button>
-                      )}
-                    {roles === 'credit_manager' &&
-                      eorder.status !== 'REJECTED' &&
-                      eorder.status !== 'ACCEPTED' &&
-                      eorder.status !== 'PAID' && (
-                        <Button
-                          className='tm_invoice_btn tm_color4'
-                          style={{ color: 'black', width: '100%' }}
-                          onClick={() => {
-                            handleOpenConfirm()
-                            changer()
-                          }}
-                        >
-                          Reject <span className='tm_btn_text'>Reject</span>
-                        </Button>
-                      )}
+                    {roles === 'credit_manager' && !eorder && (
+                      <Button
+                        className='tm_invoice_btn tm_color2'
+                        style={{ color: 'black', width: '100%' }}
+                        onClick={() => {
+                          handleOpenConfirm()
+                          changer2()
+                        }}
+                      >
+                        Accept <span className='tm_btn_text'>Accept</span>
+                      </Button>
+                    )}
+                    {roles === 'credit_manager' && !eorder && (
+                      <Button
+                        className='tm_invoice_btn tm_color4'
+                        style={{ color: 'black', width: '100%' }}
+                        onClick={() => {
+                          handleOpenConfirm()
+                          changer()
+                        }}
+                      >
+                        Reject <span className='tm_btn_text'>Reject</span>
+                      </Button>
+                    )}
                     <Link href='/comment'>
                       <Button
                         className='tm_invoice_btn tm_color3'
@@ -1271,13 +1266,7 @@ const Invoice = () => {
                         Delivered<span className='tm_btn_text'>Delivered</span>
                       </Button>
                     )}
-                    {roles === 'customer' && (
-                      <Link href='/comment'>
-                        <Button className='tm_invoice_btn tm_color2' style={{ color: 'black', width: '100%' }}>
-                          Return<span className='tm_btn_text'>Return</span>
-                        </Button>
-                      </Link>
-                    )}
+
                     {roles === 'credit_manager' &&
                       eorder.status !== 'REJECTED' &&
                       eorder.status !== 'PENDING' &&
@@ -1290,7 +1279,7 @@ const Invoice = () => {
                           Paid<span className='tm_btn_text'>Paid</span>
                         </Button>
                       )}
-                    {roles === 'warehouse_manager' && eorder.status !== 'REJECTED' && (
+                    {roles === 'warehouse_manager' && eorder.status !== 'REJECTED' && eorder.status !== 'PENDING' && (
                       <Button
                         className='tm_invoice_btn tm_color2'
                         style={{ color: 'black', width: '100%' }}
