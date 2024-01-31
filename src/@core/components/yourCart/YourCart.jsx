@@ -145,7 +145,7 @@ const YourCart = () => {
 
   const delivery = () => {
     if (sumTotal() > 0) {
-      const num = 0.05 * sumTotal()
+      let num = 0.05 * sumTotal()
       num = Math.round(num * 100) / 100
 
       return num
@@ -214,18 +214,21 @@ const YourCart = () => {
 
   const handleCheckout = async () => {
     // console.log("Items in Cart: ", itemsInCart)
-    const order = orderPrep(['_id', 'name', 'price', 'quantity'])
+    const order = orderPrep(['_id', 'itemCode', 'name', 'price', 'quantity'])
     console.log('Order: ', order)
     const customerType = Cookies.get('customerType')
     const jwt = Cookies.get('jwt')
 
     if (customerType === 'corporate') {
+      console.log(order)
       const orderUrl = process.env.NEXT_PUBLIC_API_URL + 'order'
 
       await axios
         .post(orderUrl, order, { withCredentials: true })
         .then(response => {
+          console.log('Response', response)
           console.log('Order response:', response.data)
+
           setTimeout(() => onRemoveAll(), 3000)
 
           if (!jwt) {

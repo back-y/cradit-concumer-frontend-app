@@ -43,6 +43,8 @@ const Products = ({ data, searchQuery }) => {
       // Otherwise, filter the data based on the search query
       filterBySearchQuery(searchQuery)
     }
+
+    console.log(filteredData)
   }, [searchQuery, data])
 
   if (!{ data }) {
@@ -51,7 +53,7 @@ const Products = ({ data, searchQuery }) => {
     return filteredData.map((item, index) => (
       <Grid item xs={12} lg={3} key={index}>
         <CardAppleWatch
-          pic={item.image[0]}
+          pic={process.env.NEXT_PUBLIC_API_URL + 'file/' + item.image}
           stats='$25.6k'
           icon={<Cart />}
           color='success'
@@ -100,7 +102,8 @@ const Shop = () => {
       .catch(err => {
         console.log('Error in fetching productCount', err)
       })
-    const productUrl = process.env.NEXT_PUBLIC_API_URL + `individual/product?page=${currentPage}&limit=12`
+    const productUrl = process.env.NEXT_PUBLIC_API_URL + `product?page=${currentPage}&limit=12`
+
     const { data } = await axios.get(productUrl)
     dispatch(addProducts(data))
     console.log('Product Data: ', data)
@@ -144,7 +147,7 @@ const Shop = () => {
       <Search searchQuery={searchQuery} handleSearchChange={handleSearchChange} sx={{ innerWidth: '50%' }} />
       <TabContext value={value}>
         <TabList onChange={handleChange} aria-label='card navigation example'>
-          <Tab value='1' label='Your Shop' />
+          <Tab value='1' label='Your Shop test' />
           <Tab value='2' label={itemsInCart.length + ' item(s) in cart'} icon={<Cart />} />
           {/* <Tab value='3' label='Item Three' /> */}
         </TabList>
