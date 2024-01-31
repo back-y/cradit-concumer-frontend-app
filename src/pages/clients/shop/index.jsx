@@ -1,12 +1,10 @@
 // ** MUI Imports
 
 import Grid from '@mui/material/Grid'
-import Link from 'next/link'
 import Cart from 'mdi-material-ui/Cart'
 
 // ** Custom Components Imports
 import CardAppleWatch from '../../../views/cards/CardAppleWatch'
-import CardNavigation from '../../../views/cards/CardNavigation'
 
 // ** Styled Component Import
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
@@ -14,10 +12,8 @@ import { useState } from 'react'
 
 // ** MUI Imports
 import Tab from '@mui/material/Tab'
-import Card from '@mui/material/Card'
 import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
-import Button from '@mui/material/Button'
 import TabContext from '@mui/lab/TabContext'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
@@ -27,17 +23,6 @@ import YourCart from '../../../@core/components/yourCart/YourCart'
 
 // ** Icons Imports
 
-import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
-import CellphoneLink from 'mdi-material-ui/CellphoneLink'
-import AccountOutline from 'mdi-material-ui/AccountOutline'
-
-// ** Demo Components Imports
-import Table from 'src/views/dashboard/Table'
-import StatisticsCard from 'src/views/dashboard/StatisticsCard'
-import TrendingUp from 'mdi-material-ui/TrendingUp'
-import Box from '@mui/material/Box'
-import Avatar from '@mui/material/Avatar'
-
 import { getProducts, addProducts } from 'src/redux/productSlice'
 import { getItemsInCart } from 'src/redux/cartSlice'
 import { useSelector, useDispatch } from 'react-redux'
@@ -45,7 +30,6 @@ import { useEffect } from 'react'
 import axios from 'axios'
 
 // ** Layout Import
-import BlankLayout from 'src/@core/layouts/BlankLayout'
 import Err404 from 'src/pages/404'
 
 import Cookie from 'js-cookie'
@@ -141,8 +125,6 @@ const Shop = () => {
     <Err404 />
   )
 }
-
-// shop.getLayout = page => <BlankLayout>{page}</BlankLayout>
 
 export default Shop
 

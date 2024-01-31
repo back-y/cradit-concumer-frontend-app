@@ -240,6 +240,7 @@ const YourCart = () => {
         })
     } else {
       const orderUrl = process.env.NEXT_PUBLIC_API_URL + 'individual/order'
+
       const individualOrder = {
         orderItems: order.orderItems
       }
