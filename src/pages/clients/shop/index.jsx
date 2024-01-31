@@ -168,7 +168,8 @@ import YourCart from '../../../@core/components/yourCart/YourCart'
 // import Invoice from '../../../@core/components/invoice/Invoice'
 
 // ** Icons Imports
-
+// ** Layout Import
+import { Pagination, PaginationItem } from '@mui/material'
 import { getProducts, addProducts } from 'src/redux/productSlice'
 import { getItemsInCart } from 'src/redux/cartSlice'
 import { useSelector, useDispatch } from 'react-redux'
