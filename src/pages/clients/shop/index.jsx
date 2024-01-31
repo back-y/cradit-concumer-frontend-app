@@ -152,6 +152,8 @@
 import Grid from '@mui/material/Grid'
 import Cart from 'mdi-material-ui/Cart'
 import CardAppleWatch from '../../../views/cards/CardAppleWatch'
+
+// ** Styled Component Import
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 import { useState } from 'react'
 
@@ -162,6 +164,11 @@ import TabPanel from '@mui/lab/TabPanel'
 import TabContext from '@mui/lab/TabContext'
 import CardContent from '@mui/material/CardContent'
 import YourCart from '../../../@core/components/yourCart/YourCart'
+
+// import Invoice from '../../../@core/components/invoice/Invoice'
+
+// ** Icons Imports
+
 import { getProducts, addProducts } from 'src/redux/productSlice'
 import { getItemsInCart } from 'src/redux/cartSlice'
 import { useSelector, useDispatch } from 'react-redux'
@@ -172,7 +179,6 @@ import Cookies from 'js-cookie'
 import Error401 from 'src/pages/401'
 
 // ** Layout Import
-import { Pagination, PaginationItem } from '@mui/material'
 import Err404 from 'src/pages/404'
 
 import Cookie from 'js-cookie'
@@ -363,7 +369,5 @@ const Shop = () => {
     <Error401 />
   )
 }
-
-// shop.getLayout = page => <BlankLayout>{page}</BlankLayout>
 
 export default Shop

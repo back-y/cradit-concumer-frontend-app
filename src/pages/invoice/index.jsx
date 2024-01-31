@@ -848,7 +848,7 @@ const Invoice = () => {
                       Paid<span className='tm_btn_text'>Paid</span>
                     </Button>
                   )}
-                {roles === 'warehouse_manager' && order.status !== 'REJECTED' && !eorder && (
+                {roles === 'warehouse_manager' && order.status !== 'REJECTED' && !eorder && order.status !== 'PAID' && (
                   <Button
                     className='tm_invoice_btn tm_color2'
                     style={{ color: 'black', width: '100%' }}
@@ -857,7 +857,7 @@ const Invoice = () => {
                     Process<span className='tm_btn_text'>Process</span>
                   </Button>
                 )}
-                {roles === 'warehouse_manager' && !eorder && (
+                {roles === 'warehouse_manager' && !eorder && order.status !== 'PAID' && (
                   <Button
                     className='tm_invoice_btn tm_color2'
                     style={{ color: 'black', width: '100%' }}
@@ -1043,7 +1043,7 @@ const Invoice = () => {
                         Invoice No: <b>{eorder._id}</b>
                       </p>
                       <p className='tm_invoice_date tm_m0'>
-                        Date: <b>{eorder.createdAt.slice(0, 10)}</b>
+                        Date: <b>{eorder.createdAt}</b>
                       </p>
                     </div>
                     <div className='tm_invoice_seperator tm_accent_bg'></div>
