@@ -213,7 +213,7 @@ const Products = ({ data, searchQuery }) => {
     return filteredData.map((item, index) => (
       <Grid item xs={12} lg={3} key={index}>
         <CardAppleWatch
-          pic={process.env.NEXT_PUBLIC_API_URL + 'file/' + item.image}
+          pic={item.image}
           stats='$25.6k'
           icon={<Cart />}
           color='success'
@@ -262,7 +262,7 @@ const Shop = () => {
       .catch(err => {
         console.log('Error in fetching productCount', err)
       })
-    const productUrl = process.env.NEXT_PUBLIC_API_URL + `product?page=${currentPage}&limit=12`
+    const productUrl = process.env.NEXT_PUBLIC_API_URL + `individual/product?page=${currentPage}&limit=12`
     const { data } = await axios.get(productUrl)
     dispatch(addProducts(data))
     console.log('Product Data: ', data)
