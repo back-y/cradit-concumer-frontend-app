@@ -35,34 +35,46 @@ const jwt = Cookie.get('jwt')
 const id = Cookie.get('id')
 console.log('first', id)
 
-const salesData = [
-  {
-    stats: '0 ETB',
-    title: 'Total Credit Given',
-    color: 'primary',
-    icon: <TrendingUp sx={{ fontSize: '1.75rem' }} />
-  },
-  {
-    stats: '0 ETB',
-    title: 'Total Credit Paid',
-    color: 'success',
-    icon: <AccountOutline sx={{ fontSize: '1.75rem' }} />
-  },
-  {
-    stats: '0 ETB',
-    color: 'warning',
-    title: 'Total Credit Unpaid',
-    icon: <CellphoneLink sx={{ fontSize: '1.75rem' }} />
-  },
-  {
-    stats: '0 ETB',
-    color: 'info',
-    title: 'Total Unpaid Credit With Interest',
-    icon: <CurrencyUsd sx={{ fontSize: '1.75rem' }} />
-  }
-]
+// const salesData = [
+//   {
+//     stats: '0 ETB',
+//     title: 'Total Credit Given',
+//     color: 'primary',
+//     icon: <TrendingUp sx={{ fontSize: '1.75rem' }} />
+//   },
+//   {
+//     stats: '0 ETB',
+//     title: 'Total Credit Paid',
+//     color: 'success',
+//     icon: <AccountOutline sx={{ fontSize: '1.75rem' }} />
+//   },
+//   {
+//     stats: '0 ETB',
+//     color: 'warning',
+//     title: 'Total Credit Unpaid',
+//     icon: <CellphoneLink sx={{ fontSize: '1.75rem' }} />
+//   },
+//   {
+//     stats: '0 ETB',
+//     color: 'info',
+//     title: 'Total Unpaid Credit With Interest',
+//     icon: <CurrencyUsd sx={{ fontSize: '1.75rem' }} />
+//   }
+// ]
 
 const renderStats = () => {
+  const [salesData, setSalesData] = useState([])
+
+  useEffect(() => {
+    const getter = async () => {
+      const url = process.env.NEXT_PUBLIC_API_URL + 'order/customerOrderInfo/' + id
+      const resp = await axios.get(url)
+      setSalesData(resp.data)
+      console.log('resp ,data', resp.data)
+    }
+    getter()
+  }, [])
+
   return salesData.map((item, index) => (
     <Grid item xs={12} sm={3} key={index}>
       <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>

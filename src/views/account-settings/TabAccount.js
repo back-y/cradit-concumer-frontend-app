@@ -17,6 +17,7 @@ import IconButton from '@mui/material/IconButton'
 import CardContent from '@mui/material/CardContent'
 import FormControl from '@mui/material/FormControl'
 import Button from '@mui/material/Button'
+import Cookies from 'js-cookie'
 
 import { addAuthUsers, getAuthUsers } from 'src/redux/feature/authSlice'
 import { useSelector, useDispatch } from 'react-redux'
@@ -59,12 +60,12 @@ const TabAccount = () => {
   console.log(products)
   console.log('from user', products._id)
 
-  const _id = products._id
-  const name = products.name
-  const phone = products.phone
-  const email = products.email
-  const roles = products.role
-  const success = products.success
+  const jwt = Cookies.get('jwt')
+  const id = Cookies.get('id')
+  const name = Cookies.get('name')
+  const email = Cookies.get('email')
+  const roles = Cookies.get('role')
+  const phone = Cookies.get('phone')
 
   // ** State
   const [openAlert, setOpenAlert] = useState(true)
@@ -108,21 +109,21 @@ const TabAccount = () => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Username' placeholder={name} defaultValue={name} />
+            <TextField fullWidth label={name} placeholder={name} defaultValue={name} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Name' placeholder={name} defaultValue={name} />
+            <TextField fullWidth label={phone} placeholder={phone} defaultValue={phone} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
-              type='email'
-              label='Email'
+              type={email}
+              label={email}
               placeholder={email}
               defaultValue={email}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={6}>
             <FormControl fullWidth>
               <InputLabel>Role</InputLabel>
               <Select label='Role' defaultValue={roles}>
@@ -133,8 +134,8 @@ const TabAccount = () => {
                 <MenuItem value='subscriber'>Subscriber</MenuItem>
               </Select>
             </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          </Grid> */}
+          {/* <Grid item xs={12} sm={6}>
             <FormControl fullWidth>
               <InputLabel>Status</InputLabel>
               <Select label='Status' defaultValue='active'>
@@ -143,10 +144,10 @@ const TabAccount = () => {
                 <MenuItem value='pending'>Pending</MenuItem>
               </Select>
             </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          </Grid> */}
+          {/* <Grid item xs={12} sm={6}>
             <TextField fullWidth label='Company' placeholder='ABC Pvt. Ltd.' defaultValue='ABC Pvt. Ltd.' />
-          </Grid>
+          </Grid> */}
 
           {openAlert ? (
             <Grid item xs={12} sx={{ mb: 3 }}>

@@ -16,30 +16,36 @@ const CustomGallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const imageRef = useRef();
 
-  useEffect(async () => {
-    const id = Cookies.get('new-user_id')
-    const url = process.env.NEXT_PUBLIC_API_URL + 'new-user/' + id
-    await axios.get(url)
-      .then(resp => {
-        const ID_name = resp.data.documents.ID
-        console.log('iiiidddd data', resp.data.documents)
-        const userInfo = resp.data
-        setUserInfos(userInfo)
-        console.log('iiiidddd resp userInfo', userInfo)
-        console.log('ID image name: ', ID_name)
-        const L_name = resp.data.documents.License
-        const T_name = resp.data.documents.TIN
-        const R_name = resp.data.documents.R_Cert
+  useEffect(() => {
+    const getter = async () => {
+      const id = Cookies.get('new-user_id')
+      const url = process.env.NEXT_PUBLIC_API_URL + 'new-user/' + id
 
-        const imgUrl = process.env.NEXT_PUBLIC_API_URL + 'file/'
-        setImages([imgUrl + ID_name, imgUrl + T_name, imgUrl + L_name, imgUrl + R_name])
+      // const prourl = process.env.NEXT_PUBLIC_API_URL + ''
+      await axios.get(url)
+        .then(resp => {
+          const ID_name = resp.data.documents.ID
+          console.log('iiiidddd data', resp.data)
+          const userInfo = resp.data
+          setUserInfos(userInfo)
+          console.log('iiiidddd resp userInfo', userInfo)
+          console.log('ID image name: ', ID_name)
+          const L_name = resp.data.documents.License
+          const T_name = resp.data.documents.TIN
+          const R_name = resp.data.documents.R_Cert
 
-      })
-      .catch(err => {
-        console.log(err)
-      })
+          const imgUrl = process.env.NEXT_PUBLIC_API_URL + 'file/'
+          setImages([imgUrl + ID_name, imgUrl + T_name, imgUrl + L_name, imgUrl + R_name])
 
-    console.log('Images urls: ', images)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+
+      console.log('Images urls: ', images)
+
+    }
+    getter();
 
   }, [])
 
