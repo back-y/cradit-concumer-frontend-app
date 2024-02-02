@@ -1,5 +1,6 @@
 // ** React Imports
 import { useState } from 'react'
+import axios from 'axios'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -31,6 +32,11 @@ const TabSecurity = () => {
     showCurrentPassword: false,
     showConfirmNewPassword: false
   })
+
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
+
+  const changePasswordUrl = process.env.NEXT_PUBLIC_API_URL + 'auth/change-password'
 
   // Handle Current Password
   const handleCurrentPasswordChange = prop => event => {
@@ -69,6 +75,23 @@ const TabSecurity = () => {
 
   const handleMouseDownConfirmNewPassword = event => {
     event.preventDefault()
+  }
+
+  const submitChangePassword = async () => {
+    console.log(values)
+    let extractedData = {
+      oldPassword: values.currentPassword,
+      password: values.newPassword
+    }
+    await axios
+      .post(changePasswordUrl, extractedData, { withCredentials: true })
+      .then(data => {
+        setSuccess('Password Change Success')
+      })
+      .catch(error => {
+        setError('Password Change Failed')
+      })
+    // console.log(datas.data)
   }
 
   return (
@@ -200,7 +223,7 @@ const TabSecurity = () => {
         </Box>
 
         <Box sx={{ mt: 11 }}>
-          <Button variant='contained' sx={{ marginRight: 3.5 }}>
+          <Button variant='contained' sx={{ marginRight: 3.5 }} onClick={submitChangePassword}>
             Save Changes
           </Button>
           <Button
