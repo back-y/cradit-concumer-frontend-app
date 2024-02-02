@@ -71,11 +71,10 @@ const ResetButtonStyled = styled(Button)(({ theme }) => ({
 // ======= modal imports====
 const Invoice = () => {
   // ===fetch dtas states====
-  const [orderItems, setOrderItems] = useState([])
-  const [eorderItems, setEorderItems] = useState([])
-  const [ord, setOrd] = useState([])
+  // const [eorderItems, setEorderItems] = useState([])
+  // const [ord, setOrd] = useState([])
 
-  const [eorder, setEorder] = useState({})
+  // const [eorder, setEorder] = useState({})
 
   const [user, setUser] = useState({
     name: '',
@@ -101,26 +100,26 @@ const Invoice = () => {
       settingUser(res.data)
     })
 
-    await axios
-      .get(process.env.NEXT_PUBLIC_API_URL + 'credit')
-      .then(resp => {
-        // console.log('resp: ', resp)
+    // await axios
+    //   .get(process.env.NEXT_PUBLIC_API_URL + 'credit')
+    //   .then(resp => {
+    //     // console.log('resp: ', resp)
 
-        const servOrder = resp.data.filter(
-          ord => ord.editOrderId !== order.editOrderId && ord.status === 'PROCESSED' && order._id === ord.orderId
-        )[0]
-        setEorder(servOrder)
-        // console.log('Eorder: ', servOrder)
-        // console.log('Eorder: ', servOrder.products)
-        setEorderItems(servOrder.products)
-        setEUser({
-          ename: servOrder.userName,
-          eemail: servOrder.userEmail
-        })
-      })
-      .catch(err => {
-        console.log('Error: ', err)
-      })
+    //     // const servOrder = resp.data.filter(
+    //     //   ord => ord.editOrderId !== order.editOrderId && ord.status === 'PROCESSED' && order._id === ord.orderId
+    //     // )[0]
+    //     // setEorder(servOrder)
+    //     // console.log('Eorder: ', servOrder)
+    //     // console.log('Eorder: ', servOrder.products)
+    //     // setEorderItems(servOrder.products)
+    //     // setEUser({
+    //     //   ename: servOrder.userName,
+    //     //   eemail: servOrder.userEmail
+    //     // })
+    //   })
+    //   .catch(err => {
+    //     console.log('Error: ', err)
+    //   })
 
     // *********
     // setOrderItems(order.orderItems)

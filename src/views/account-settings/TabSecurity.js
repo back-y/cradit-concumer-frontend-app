@@ -33,6 +33,9 @@ const TabSecurity = () => {
     showConfirmNewPassword: false
   })
 
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
+
   const changePasswordUrl = process.env.NEXT_PUBLIC_API_URL + 'auth/change-password'
 
   // Handle Current Password
@@ -80,9 +83,15 @@ const TabSecurity = () => {
       oldPassword: values.currentPassword,
       password: values.newPassword
     }
-    let datas = await axios.post(changePasswordUrl, extractedData, { withCredentials: true })
-    console.log(datas.data)
-    alert('submittedd')
+    await axios
+      .post(changePasswordUrl, extractedData, { withCredentials: true })
+      .then(data => {
+        setSuccess('Password Change Success')
+      })
+      .catch(error => {
+        setError('Password Change Failed')
+      })
+    // console.log(datas.data)
   }
 
   return (
