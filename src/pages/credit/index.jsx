@@ -28,41 +28,25 @@ import BarsGraph from './BarsGraph'
 import Err404 from 'src/pages/404'
 
 import Cookie from 'js-cookie'
+import axios from 'axios'
 
 // ========================================
 
 const role = Cookie.get('role')
 
-// ========================================
-
-const salesData = [
-  {
-    stats: '0 ETB',
-    title: 'Total Credit Given',
-    color: 'primary',
-    icon: <TrendingUp sx={{ fontSize: '1.75rem' }} />
-  },
-  {
-    stats: '0 ETB',
-    title: 'Total Credit Paid',
-    color: 'success',
-    icon: <AccountOutline sx={{ fontSize: '1.75rem' }} />
-  },
-  {
-    stats: '0 ETB',
-    color: 'warning',
-    title: 'Total Credit Unpaid',
-    icon: <CellphoneLink sx={{ fontSize: '1.75rem' }} />
-  },
-  {
-    stats: '0 ETB',
-    color: 'info',
-    title: 'Total Unpaid Credit With Interest',
-    icon: <CurrencyUsd sx={{ fontSize: '1.75rem' }} />
-  }
-]
-
 const renderStats = () => {
+  const [salesData, setSalesData] = useState([])
+
+  useEffect(() => {
+    const getter = async () => {
+      const url = process.env.NEXT_PUBLIC_API_URL + 'credit/totalCreditInfo'
+      const resp = await axios.get(url)
+      setSalesData(resp.data)
+      console.log('resp ,data', resp.data)
+    }
+    getter()
+  }, [])
+
   return salesData.map((item, index) => (
     <Grid item xs={12} sm={3} key={index}>
       <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
@@ -81,7 +65,7 @@ const renderStats = () => {
         </Avatar>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Typography variant='caption'>{item.title}</Typography>
-          <Typography variant='h6'>{item.stats}</Typography>
+          <Typography variant='h6'>{item.stats.toLocaleString()}</Typography>
         </Box>
       </Box>
     </Grid>
