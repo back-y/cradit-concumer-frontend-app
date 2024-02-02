@@ -87,21 +87,31 @@ const Invoice = () => {
     eemail: ''
   })
 
-  const order = useSelector(getOrder)
+  const router = useRouter()
+
+  const orderId = router.query.slug
+  const endpoint = 'order/' + orderId
+
+  let [order, settingUser] = useState([])
 
   const fetchData = async () => {
-    // *********
+    // ********
+
+    await axios.get(process.env.NEXT_PUBLIC_API_URL + endpoint).then(res => {
+      settingUser(res.data)
+    })
+
     await axios
       .get(process.env.NEXT_PUBLIC_API_URL + 'credit')
       .then(resp => {
-        console.log('resp: ', resp)
+        // console.log('resp: ', resp)
 
         const servOrder = resp.data.filter(
           ord => ord.editOrderId !== order.editOrderId && ord.status === 'PROCESSED' && order._id === ord.orderId
         )[0]
         setEorder(servOrder)
-        console.log('Eorder: ', servOrder)
-        console.log('Eorder: ', servOrder.products)
+        // console.log('Eorder: ', servOrder)
+        // console.log('Eorder: ', servOrder.products)
         setEorderItems(servOrder.products)
         setEUser({
           ename: servOrder.userName,
@@ -113,8 +123,8 @@ const Invoice = () => {
       })
 
     // *********
-    setOrderItems(order.orderItems)
-    setOrd(order)
+    // setOrderItems(order.orderItems)
+    // setOrd(order)
     const userId = order.userId
     const userUrl = process.env.NEXT_PUBLIC_API_URL + 'auth/' + userId
     const resp = await axios.get(userUrl)
@@ -123,13 +133,20 @@ const Invoice = () => {
       email: resp.data.email
     })
   }
-  console.log('Order: ', order)
-  console.log('Order Items: ', orderItems)
-  console.log('Order Items iddddd: ', order._id)
+  // console.log('Order: ', order)
+  // console.log('Order Items: ', orderItems)
+  // console.log('Order Items iddddd: ', order._id)
 
   useEffect(() => {
     fetchData()
-  }, [])
+    if (order) {
+      setOrderItems(order.orderItems)
+    }
+  }, [order])
+
+  console.log(endpoint)
+  console.log('Order ', order)
+  // console.log('Order items', orderItems)
 
   // ======= modal states====
 
@@ -241,8 +258,6 @@ const Invoice = () => {
         console.log(err)
       })
   }
-
-  const router = useRouter()
 
   const handleEdit = () => {
     console.log('Befor dispatch to editCartSlice: ', order.orderItems)
@@ -420,16 +435,6 @@ const Invoice = () => {
   }
 
   // mark as paid sectiom
-
-  const totalPrice = order.totalPrice // Assuming eorder is your API response object
-
-  // Format totalPrice to two decimal places
-  const formattedTotalPrice = totalPrice.toFixed(2)
-
-  const etotalPrice = order.totalPrice // Assuming eorder is your API response object
-
-  // Format totalPrice to two decimal places
-  const eformattedTotalPrice = totalPrice.toFixed(2)
 
   return order.status ? (
     <>
@@ -652,8 +657,8 @@ const Invoice = () => {
                       </thead>
 
                       <tbody>
-                        {orderItems !== null ? (
-                          orderItems.map((item, key) => (
+                        {order.orderItems !== null ? (
+                          order.orderItems.map((item, key) => (
                             <tr key={key}>
                               <td key={item._id} className='tm_width_3'>
                                 {item.name}
@@ -680,7 +685,7 @@ const Invoice = () => {
                     <p className='tm_mb2'>
                       <b className='tm_primary_color'>Payment info:</b>
                     </p>
-                    <p className='tm_m0'>Amount: {formattedTotalPrice} ETB</p>
+                    <p className='tm_m0'>Amount: {order.totalPrice} ETB</p>
                   </div>
                   <div className='tm_right_footer'>
                     <table className='tm_mb15'>
@@ -1128,7 +1133,7 @@ const Invoice = () => {
                         </p>
                         <p className='tm_m0'>
                           {/* Credit Card - 236***********928 <br /> */}
-                          Amount: {eformattedTotalPrice} ETB
+                          Amount: {eorder.totalPrice} ETB
                         </p>
                       </div>
                       <div className='tm_right_footer'>
@@ -1137,7 +1142,7 @@ const Invoice = () => {
                             <tr className='tm_gray_bg '>
                               <td className='tm_width_3 tm_primary_color tm_bold'>Subtoal</td>
                               <td className='tm_width_3 tm_primary_color tm_bold tm_text_right'>
-                                {eformattedTotalPrice} ETB
+                                {eorder.totalPrice} ETB
                               </td>
                             </tr>
                             <tr className='tm_gray_bg'>
