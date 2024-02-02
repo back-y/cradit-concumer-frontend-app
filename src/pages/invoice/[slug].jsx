@@ -139,10 +139,10 @@ const Invoice = () => {
 
   useEffect(() => {
     fetchData()
-    if (order) {
-      setOrderItems(order.orderItems)
-    }
-  }, [order])
+    // if (order) {
+    //   setOrderItems(order.orderItems)
+    // }
+  }, [])
 
   console.log(endpoint)
   console.log('Order ', order)
