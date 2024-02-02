@@ -11,7 +11,7 @@ import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 
-import Invoice from 'src/pages/invoice/index'
+// import Invoice from 'src/pages/invoice/index'
 
 const ListRequestedCredits = ({ title, price, description, icon, iconTitle, stock }) => {
 
@@ -54,13 +54,13 @@ const ListRequestedCredits = ({ title, price, description, icon, iconTitle, stoc
                     {"Use Google's location service?"}
                 </DialogTitle>
 
-                <DialogContent>
+                {/* <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         Let Google help apps determine location. This means sending anonymous
                         location data to Google, even when no apps are running.
                     </DialogContentText>
                     <Invoice />
-                </DialogContent>
+                </DialogContent> */}
 
                 <DialogActions>
                     <Button onClick={handleClose} autoFocus size='large' className='pbeth' type='submit' sx={{

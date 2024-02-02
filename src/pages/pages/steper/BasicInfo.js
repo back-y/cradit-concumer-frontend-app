@@ -50,41 +50,39 @@ const TabAccount = ({ activateParentButton }) => {
         phone: '',
         email: '',
         company: '',
-        profilePicture: '/images/avatars/1.png'
+        businessType: '',
+        numberOfEmployers: '',
+        numberOfBranches: '',
+        expectedCreditLimit: '',
+
     })
 
     // ** State
     const [openAlert, setOpenAlert] = useState(false)
     const [openAlert2, setOpenAlert2] = useState(false)
     const [hideButton, setHideButton] = useState(false)
+    const [imgSrc, setImgSrc] = useState('/images/avatars/1.png')
 
-    // const [imgSrc, setImgSrc] = useState('/images/avatars/1.png')
-
-    // const onChange = file => {
-    //     const reader = new FileReader()
-    //     const { files } = file.target
-    //     if (files && files.length !== 0) {
-    //         reader.onload = () => setNewUser(newUser => ({
-    //             ...newUser,
-    //             profilePicture: reader.result
-    //         }))
-    //         reader.readAsDataURL(files[0])
-    //     }
-    // }
+    const onChange = file => {
+        const reader = new FileReader()
+        const { files } = file.target
+        if (files && files.length !== 0) {
+            reader.onload = () => setImgSrc(reader.result)
+            reader.readAsDataURL(files[0])
+        }
+    }
 
     const handleChange = (e) => {
         console.log(e.target.name, ': ', e.target.value)
         setNewUser({ ...newUser, [e.target.name]: e.target.value })
-
-
     }
 
     const dispatch = useDispatch();
 
     const onClick = async () => {
 
-        !newUser.name || !newUser.phone || !newUser.email || !newUser.company ? setOpenAlert(true) : setOpenAlert(false)
-        newUser.name && newUser.phone && newUser.email && newUser.company ? setOpenAlert2(true) : setOpenAlert2(false)
+        !newUser.name || !newUser.phone || !newUser.email || !newUser.company || !newUser.businessType || !newUser.numberOfEmployers || !newUser.numberOfBranches || !newUser.expectedCreditLimit ? setOpenAlert(true) : setOpenAlert(false)
+        newUser.name && newUser.phone && newUser.email && newUser.company && newUser.businessType && newUser.numberOfEmployers && newUser.numberOfBranches && newUser.expectedCreditLimit ? setOpenAlert2(true) : setOpenAlert2(false)
         dispatch(addBasicInfo(newUser))
 
         await activateParentButton();
@@ -98,26 +96,22 @@ const TabAccount = ({ activateParentButton }) => {
                 <Grid container spacing={7}>
                     <Grid item xs={12} sx={{ marginTop: 4.8, marginBottom: 3 }}>
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <ImgStyled src={newUser.profilePicture} alt='Profile Pic' />
+                            <ImgStyled src={imgSrc} alt='Profile Pic' />
                             <Box>
                                 <ButtonStyled className='pbeth' component='label' variant='contained' htmlFor='account-settings-upload-image'>
                                     Upload Your Photo
                                     <input
                                         hidden
                                         type='file'
-                                        onChange={handleChange}
+                                        onChange={onChange}
                                         accept='image/png, image/jpeg'
                                         id='account-settings-upload-image'
-                                        name='profilePicture'
                                     />
                                 </ButtonStyled>
                                 <br />
                                 <br />
 
-                                <ResetButtonStyled color='error' variant='outlined' onClick={() => setNewUser(newUser => ({
-                                    ...newUser,
-                                    profilePicture: '/images/avatars/1.png'
-                                }))}>
+                                <ResetButtonStyled color='error' variant='outlined' onClick={() => setImgSrc('/images/avatars/1.png')}>
                                     Reset
                                 </ResetButtonStyled>
                                 <Typography variant='body2' sx={{ marginTop: 5 }}>
@@ -132,6 +126,20 @@ const TabAccount = ({ activateParentButton }) => {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField name="phone" fullWidth label='Phone' type="number" placeholder='Phone' onChange={handleChange} />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField name="businessType" fullWidth label='Business Type' placeholder='Your Business Type' onChange={handleChange} />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField name="numberOfEmployers" fullWidth label='Number of Employers' type="number" placeholder='Number of Employers' onChange={handleChange} />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                        <TextField name="numberOfBranches" fullWidth label='Number of Branches' type="number" placeholder='Number of Branches' onChange={handleChange} />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                        <TextField name="expectedCreditLimit " fullWidth label=' Expected Credit Limit' type="number" placeholder=' Expected Credit Limit' onChange={handleChange} />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField

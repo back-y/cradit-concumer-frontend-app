@@ -20,12 +20,10 @@ const CustomGallery = () => {
     const getter = async () => {
       const id = Cookies.get('new-user_id')
       const url = process.env.NEXT_PUBLIC_API_URL + 'new-user/' + id
-
-      // const prourl = process.env.NEXT_PUBLIC_API_URL + ''
       await axios.get(url)
         .then(resp => {
           const ID_name = resp.data.documents.ID
-          console.log('iiiidddd data', resp.data)
+          console.log('iiiidddd data', resp.data.documents)
           const userInfo = resp.data
           setUserInfos(userInfo)
           console.log('iiiidddd resp userInfo', userInfo)
