@@ -50,26 +50,33 @@ const TabAccount = ({ activateParentButton }) => {
         phone: '',
         email: '',
         company: '',
+        profilePicture: '/images/avatars/1.png'
     })
 
     // ** State
     const [openAlert, setOpenAlert] = useState(false)
     const [openAlert2, setOpenAlert2] = useState(false)
     const [hideButton, setHideButton] = useState(false)
-    const [imgSrc, setImgSrc] = useState('/images/avatars/1.png')
 
-    const onChange = file => {
-        const reader = new FileReader()
-        const { files } = file.target
-        if (files && files.length !== 0) {
-            reader.onload = () => setImgSrc(reader.result)
-            reader.readAsDataURL(files[0])
-        }
-    }
+    // const [imgSrc, setImgSrc] = useState('/images/avatars/1.png')
+
+    // const onChange = file => {
+    //     const reader = new FileReader()
+    //     const { files } = file.target
+    //     if (files && files.length !== 0) {
+    //         reader.onload = () => setNewUser(newUser => ({
+    //             ...newUser,
+    //             profilePicture: reader.result
+    //         }))
+    //         reader.readAsDataURL(files[0])
+    //     }
+    // }
 
     const handleChange = (e) => {
         console.log(e.target.name, ': ', e.target.value)
         setNewUser({ ...newUser, [e.target.name]: e.target.value })
+
+
     }
 
     const dispatch = useDispatch();
@@ -91,22 +98,26 @@ const TabAccount = ({ activateParentButton }) => {
                 <Grid container spacing={7}>
                     <Grid item xs={12} sx={{ marginTop: 4.8, marginBottom: 3 }}>
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <ImgStyled src={imgSrc} alt='Profile Pic' />
+                            <ImgStyled src={newUser.profilePicture} alt='Profile Pic' />
                             <Box>
                                 <ButtonStyled className='pbeth' component='label' variant='contained' htmlFor='account-settings-upload-image'>
                                     Upload Your Photo
                                     <input
                                         hidden
                                         type='file'
-                                        onChange={onChange}
+                                        onChange={handleChange}
                                         accept='image/png, image/jpeg'
                                         id='account-settings-upload-image'
+                                        name='profilePicture'
                                     />
                                 </ButtonStyled>
                                 <br />
                                 <br />
 
-                                <ResetButtonStyled color='error' variant='outlined' onClick={() => setImgSrc('/images/avatars/1.png')}>
+                                <ResetButtonStyled color='error' variant='outlined' onClick={() => setNewUser(newUser => ({
+                                    ...newUser,
+                                    profilePicture: '/images/avatars/1.png'
+                                }))}>
                                     Reset
                                 </ResetButtonStyled>
                                 <Typography variant='body2' sx={{ marginTop: 5 }}>

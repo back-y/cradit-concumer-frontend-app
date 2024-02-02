@@ -429,6 +429,16 @@ const Invoice = () => {
 
   // mark as paid sectiom
 
+  const totalPrice = order.totalPrice // Assuming eorder is your API response object
+
+  // Format totalPrice to two decimal places
+  const formattedTotalPrice = totalPrice.toFixed(2)
+
+  const etotalPrice = order.totalPrice // Assuming eorder is your API response object
+
+  // Format totalPrice to two decimal places
+  const eformattedTotalPrice = totalPrice.toFixed(2)
+
   return order.status ? (
     <>
       {/* =======modal====== */}
@@ -678,7 +688,7 @@ const Invoice = () => {
                     <p className='tm_mb2'>
                       <b className='tm_primary_color'>Payment info:</b>
                     </p>
-                    <p className='tm_m0'>Amount: {order.totalPrice} ETB</p>
+                    <p className='tm_m0'>Amount: {formattedTotalPrice} ETB</p>
                   </div>
                   <div className='tm_right_footer'>
                     <table className='tm_mb15'>
@@ -1126,7 +1136,7 @@ const Invoice = () => {
                         </p>
                         <p className='tm_m0'>
                           {/* Credit Card - 236***********928 <br /> */}
-                          Amount: {eorder.totalPrice} ETB
+                          Amount: {eformattedTotalPrice} ETB
                         </p>
                       </div>
                       <div className='tm_right_footer'>
@@ -1135,7 +1145,7 @@ const Invoice = () => {
                             <tr className='tm_gray_bg '>
                               <td className='tm_width_3 tm_primary_color tm_bold'>Subtoal</td>
                               <td className='tm_width_3 tm_primary_color tm_bold tm_text_right'>
-                                {eorder.totalPrice} ETB
+                                {eformattedTotalPrice} ETB
                               </td>
                             </tr>
                             <tr className='tm_gray_bg'>
