@@ -1,13 +1,19 @@
 import Link from 'next/link'
-import ListRequestedCredits from '../../../../src/views/form-layouts/ListRequestedCredits'
 import { Button, IconButton, Snackbar, Typography, Box } from '@mui/material'
 import { useState } from 'react'
 import { getProducts, addProducts } from 'src/redux/productSlice'
 import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from 'react'
 import axios from 'axios'
 import { Margin } from 'mdi-material-ui'
 import CardMedia from '@mui/material/CardMedia'
+
+// import React, { useState } from 'react';
+import { FormControl, Radio, RadioGroup, FormControlLabel, ListItemIcon, ListItemText } from '@mui/material'
+import CreditCardIcon from '@mui/icons-material/CreditCard'
+
+// import PayPalIcon from '@mui/icons-material'
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
+import PaymentIcon from '@mui/icons-material/Payment'
 
 import { getItemsInCart, addItemToCart, removeItemFromCart } from 'src/redux/cartSlice'
 
@@ -26,6 +32,7 @@ import select from 'src/@core/theme/overrides/select'
 import { route } from 'next/dist/server/router'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
+
 // ======================================
 
 const CartItem = props => {
@@ -123,6 +130,16 @@ const CartItem = props => {
 const YourCart = () => {
   const [open, setOpen] = useState(true)
 
+  // ===============
+
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('')
+
+  const handlePaymentMethodChange = event => {
+    setSelectedPaymentMethod(event.target.value)
+  }
+
+  // ===============
+
   const handelClose = () => {
     setOpen(false)
   }
@@ -195,9 +212,11 @@ const YourCart = () => {
           selectedJsonObject[attribute] = jsonObject[attribute]
         }
       }
+
       return selectedJsonObject
     })
     order.orderItems = orderItems
+
     return order
   }
 
@@ -213,6 +232,8 @@ const YourCart = () => {
   const router = useRouter()
 
   const handleCheckout = async () => {
+    console.log('Selected Payment Method:', selectedPaymentMethod)
+
     // console.log("Items in Cart: ", itemsInCart)
     const order = orderPrep(['_id', 'itemCode', 'name', 'price', 'quantity'])
     console.log('Order: ', order)
@@ -256,6 +277,7 @@ const YourCart = () => {
           // if (response.data.message === 'Data received successfully!'){
           // router.push('/clients/shopindividual/pending')
           router.push(respUrl)
+
           // }
 
           setTimeout(() => onRemoveAll(), 3000)
@@ -284,6 +306,15 @@ const YourCart = () => {
   }
 
   // ===============spinner==============
+
+  const bannerStyle = {
+    display: 'flex'
+  }
+
+  const banStyle = {
+    borderRadius: '50%',
+    margin: '10px'
+  }
 
   return itemsInCart.length > 0 ? (
     <section className='bdy'>
@@ -341,10 +372,73 @@ const YourCart = () => {
             </div>
             {/* ==============================================spinner============================================== */}
 
+            {/* ==============================================spinner============================================== */}
+
             <div className=' '>
+              <FormControl component='fieldset'>
+                <RadioGroup
+                  aria-label='payment-method'
+                  name='payment-method'
+                  value={selectedPaymentMethod}
+                  onChange={handlePaymentMethodChange}
+                >
+                  <div style={bannerStyle}>
+                    <span>
+                      <img style={banStyle} src='/images/PBETH/svgicons/paypal.jpg' alt='KCCM' />
+                    </span>
+                    <FormControlLabel value='KCCM' control={<Radio />} label='Use KCCM' />
+                  </div>
+                  <div style={bannerStyle}>
+                    <span>
+                      <img style={banStyle} src='/images/PBETH/svgicons/e-bidr.png' alt='e-Bidr' />
+                    </span>
+                    <FormControlLabel value='eBidr' control={<Radio />} label='Use eBidr' />
+                  </div>
+                  <div style={bannerStyle}>
+                    <span>
+                      <img style={banStyle} src='/images/PBETH/svgicons/master.gif' alt='Master Card' />
+                    </span>
+                    <FormControlLabel value='credit_card' control={<Radio />} icon={<CreditCardIcon />} />
+                  </div>
+                  <div style={bannerStyle}>
+                    <span>
+                      <img style={banStyle} src='/images/PBETH/svgicons/paypal.jpg' alt='PayPal' />
+                    </span>
+                    <FormControlLabel value='paypal' control={<Radio />} label={<ListItemText primary='PayPal' />} />
+                  </div>
+                  <div style={bannerStyle}>
+                    <span>
+                      <img style={banStyle} src='/images/PBETH/svgicons/bank.png' alt='Bank Transfer' />
+                    </span>
+                    <FormControlLabel
+                      value='bank_transfer'
+                      control={<Radio />}
+                      label={<ListItemText primary='Bank Transfer' />}
+                      icon={<AccountBalanceIcon />}
+                    />
+                  </div>
+                  <div style={bannerStyle}>
+                    <span>
+                      <img style={banStyle} src='/images/PBETH/svgicons/telebirr.png' alt='Tele Birr' />
+                    </span>
+                    <FormControlLabel
+                      value='telebirr'
+                      control={<Radio />}
+                      label={<ListItemText primary='Tele Birr' />}
+                      icon={<PaymentIcon />} // Use the Payment icon for Stripe
+                    />
+                  </div>
+                </RadioGroup>
+              </FormControl>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Box sx={{ m: 1, position: 'relative' }}>
-                  <Fab aria-label='send' color='primary' sx={buttonSx} onClick={handleCheckout}>
+                  <Fab
+                    aria-label='send'
+                    color='primary'
+                    sx={buttonSx}
+                    onClick={handleCheckout}
+                    disabled={!selectedPaymentMethod}
+                  >
                     {success ? <CheckIcon /> : <SaveIcon />}
                   </Fab>
                   {loading && (
@@ -361,7 +455,12 @@ const YourCart = () => {
                   )}
                 </Box>
                 <Box sx={{ m: 1, position: 'relative' }}>
-                  <Button variant='contained' sx={buttonSx} disabled={loading} onClick={handleCheckout}>
+                  <Button
+                    variant='contained'
+                    sx={buttonSx}
+                    disabled={!selectedPaymentMethod || loading}
+                    onClick={handleCheckout}
+                  >
                     CHECKOUT
                   </Button>
 

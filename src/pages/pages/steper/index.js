@@ -89,7 +89,7 @@ export default function VerticalLinearStepper() {
                 console.log('Resp: ', resp.data)
 
                 if (resp.data) {
-                    // Cookies.set('new-user_id', resp.data._id )
+                    Cookies.set('new-user_id', resp.data._id)
                     id = resp.data._id
                 }
 
@@ -105,7 +105,7 @@ export default function VerticalLinearStepper() {
             formData.append('file3', legalInfo.file3);
             formData.append('file4', legalInfo.file4);
 
-            // const id = Cookies.get('new-user_id')
+            //  const id = Cookies.get('new-user_id')
             const uploadUrl = baseUrl + endPoint + '/upload/' + id
             console.log('Url: ', uploadUrl)
             console.log('Files ... : ', legalInfo)
