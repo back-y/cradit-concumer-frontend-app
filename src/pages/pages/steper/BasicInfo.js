@@ -73,7 +73,17 @@ const TabAccount = ({ activateParentButton }) => {
 
   const handleChange = e => {
     console.log(e.target.name, ': ', e.target.value)
-    setNewUser({ ...newUser, [e.target.name]: e.target.value })
+    let value = null
+    if (e.target.name === 'numberOfEmployees') {
+      value = Number(e.target.value)
+    } else if (e.target.name === 'numberOfBranches') {
+      value = Number(e.target.value)
+    } else if (e.target.name === 'expectedCredit') {
+      value = Number(e.target.value)
+    } else {
+      value = e.target.value
+    }
+    setNewUser({ ...newUser, [e.target.name]: value })
   }
 
   const dispatch = useDispatch()
@@ -84,9 +94,9 @@ const TabAccount = ({ activateParentButton }) => {
     !newUser.email ||
     !newUser.company ||
     !newUser.businessType ||
-    !newUser.numberOfEmployers ||
+    !newUser.numberOfEmployees ||
     !newUser.numberOfBranches ||
-    !newUser.expectedCreditLimit
+    !newUser.expectedCredit
       ? setOpenAlert(true)
       : setOpenAlert(false)
     newUser.name &&
@@ -94,9 +104,9 @@ const TabAccount = ({ activateParentButton }) => {
     newUser.email &&
     newUser.company &&
     newUser.businessType &&
-    newUser.numberOfEmployers &&
+    newUser.numberOfEmployees &&
     newUser.numberOfBranches &&
-    newUser.expectedCreditLimit
+    newUser.expectedCredit
       ? setOpenAlert2(true)
       : setOpenAlert2(false)
     dispatch(addBasicInfo(newUser))
