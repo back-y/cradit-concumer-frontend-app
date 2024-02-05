@@ -21,6 +21,8 @@ import EyeOutline from 'mdi-material-ui/EyeOutline'
 import KeyOutline from 'mdi-material-ui/KeyOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 import LockOpenOutline from 'mdi-material-ui/LockOpenOutline'
+import { Alert } from '@mui/material'
+import CheckIcon from '@mui/icons-material/Check'
 
 const TabSecurity = () => {
   // ** States
@@ -87,9 +89,11 @@ const TabSecurity = () => {
       .post(changePasswordUrl, extractedData, { withCredentials: true })
       .then(data => {
         setSuccess('Password Change Success')
+        setError('')
       })
       .catch(error => {
         setError('Password Change Failed')
+        setSuccess('')
       })
     // console.log(datas.data)
   }
@@ -97,6 +101,17 @@ const TabSecurity = () => {
   return (
     <form>
       <CardContent sx={{ paddingBottom: 0 }}>
+        {success && (
+          <Alert icon={<CheckIcon fontSize='inherit' />} severity='success'>
+            Your change password operation is successful.
+          </Alert>
+        )}
+
+        {error && (
+          <Alert icon={<CheckIcon fontSize='inherit' />} severity='error'>
+            Your change password operation is faild.
+          </Alert>
+        )}
         <Grid container spacing={5}>
           <Grid item xs={12} sm={6}>
             <Grid container spacing={5}>
