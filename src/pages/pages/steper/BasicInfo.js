@@ -15,6 +15,7 @@ import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import { addBasicInfo } from 'src/redux/candidateSlice'
 import { useSelector, useDispatch } from 'react-redux'
+import { addProfilePicture } from 'src/redux/candidateSlice'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
@@ -61,12 +62,16 @@ const TabAccount = ({ activateParentButton }) => {
   const [openAlert2, setOpenAlert2] = useState(false)
   const [hideButton, setHideButton] = useState(false)
   const [imgSrc, setImgSrc] = useState('/images/avatars/1.png')
+  const [profilePicture,setProfilPicture]= useState(null)
 
   const onChange = file => {
     const reader = new FileReader()
     const { files } = file.target
     if (files && files.length !== 0) {
-      reader.onload = () => setImgSrc(reader.result)
+      reader.onload = () =>{
+        setProfilPicture( files[0]);
+         setImgSrc(reader.result)
+        }
       reader.readAsDataURL(files[0])
     }
   }
@@ -110,6 +115,7 @@ const TabAccount = ({ activateParentButton }) => {
       ? setOpenAlert2(true)
       : setOpenAlert2(false)
     dispatch(addBasicInfo(newUser))
+    dispatch(addProfilePicture(profilePicture))
 
     await activateParentButton()
     setHideButton(true)
