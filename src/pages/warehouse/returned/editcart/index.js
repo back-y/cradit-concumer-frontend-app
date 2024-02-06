@@ -26,57 +26,57 @@ import select from 'src/@core/theme/overrides/select'
 
 // ======================================
 
-const fetchProducts = async (cartItems) => {
+const fetchProducts = async cartItems => {
   const products = await Promise.all(
-    cartItems.map(async (item) => {
-      const url = process.env.NEXT_PUBLIC_API_URL + 'product/' + item._id;
-      const resp = await axios.get(url);
-      const product = resp.data;
+    cartItems.map(async item => {
+      const url = process.env.NEXT_PUBLIC_API_URL + 'individual/product/' + item._id
+      const resp = await axios.get(url)
+      const product = resp.data
 
-      return product;
+      return product
     })
-  );
+  )
 
-  return products;
+  return products
 }
 
 const findByIdAndUpdate = (array, id, updatedProperties) => {
-  const index = array.findIndex(item => item._id === id);
+  const index = array.findIndex(item => item._id === id)
 
   if (index !== -1) {
-    const updatedObject = { ...array[index], ...updatedProperties };
+    const updatedObject = { ...array[index], ...updatedProperties }
 
-    const newArray = array.map((item, i) => (i === index ? updatedObject : item));
+    const newArray = array.map((item, i) => (i === index ? updatedObject : item))
 
-    return newArray;
+    return newArray
   }
 
-  return array;
-};
+  return array
+}
 
 const CartItem = props => {
   const [products, setProducts] = useState([])
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   // const orderInCart = useSelector(getOrderInCart);
-  const itemsInCart = useSelector(getItemsInCart);
+  const itemsInCart = useSelector(getItemsInCart)
 
   const onDecrease = (e, id, amount, stock) => {
-    console.log("On - , id: ", id, " amount: ", amount, " stock: ", stock)
+    console.log('On - , id: ', id, ' amount: ', amount, ' stock: ', stock)
 
     if (amount > 1) {
-      amount = amount - 1;
+      amount = amount - 1
       const newItems = findByIdAndUpdate(itemsInCart, id, { quantity: amount })
       dispatch(addItemToCart(newItems))
     }
   }
 
   const onIncrease = (e, id, amount, stock) => {
-    console.log("On + , id: ", id, " amount: ", amount, " stock: ", stock)
+    console.log('On + , id: ', id, ' amount: ', amount, ' stock: ', stock)
 
     if (amount < stock) {
-      amount = amount + 1;
+      amount = amount + 1
       const newItems = findByIdAndUpdate(itemsInCart, id, { quantity: amount })
       dispatch(addItemToCart(newItems))
     }
@@ -85,13 +85,13 @@ const CartItem = props => {
   useEffect(() => {
     const fetchData = async () => {
       const products = await fetchProducts(itemsInCart)
-      console.log("Products: ", products);
+      console.log('Products: ', products)
       setProducts(products)
     }
-    fetchData();
+    fetchData()
   }, [props])
 
-  console.log("Items in editCart: ", props.items);
+  console.log('Items in editCart: ', props.items)
 
   if (!props.items) {
     return <></>
@@ -132,20 +132,17 @@ const CartItem = props => {
         </div>
         <div className='col'>
           ETB {item.price} / {item.unit}
-
         </div>
-
       </div>
     </div>
   ))
 }
 
-
 // ====================================================================================
 
 const YourCart = () => {
   const [open, setOpen] = useState(true)
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([])
 
   // const products = useSelector(getProducts)
   const itemsInCart = useSelector(getItemsInCart)
@@ -153,10 +150,10 @@ const YourCart = () => {
   useEffect(() => {
     const fetchData = async () => {
       const products = await fetchProducts(itemsInCart)
-      console.log("Products: ", products);
+      console.log('Products: ', products)
       setProducts(products)
     }
-    fetchData();
+    fetchData()
   }, [])
 
   const handelClose = () => {
@@ -170,7 +167,7 @@ const YourCart = () => {
   const sumTotal = () => {
     let total = 0
     products.map((item, index) => {
-      total += item.price * itemsInCart[index].quantity;
+      total += item.price * itemsInCart[index].quantity
     })
 
     return total
@@ -178,7 +175,7 @@ const YourCart = () => {
 
   const delivery = () => {
     if (sumTotal() > 0) {
-      const num = 0.05 * sumTotal()
+      let num = 0.05 * sumTotal()
       num = Math.round(num * 100) / 100
 
       return num
@@ -206,68 +203,70 @@ const YourCart = () => {
     }
   }, [])
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const onRemoveAll = () => {
-
     // dispatch(addItemToCart([]))
-
   }
 
-  const orderInCart = useSelector(getOrderInCart);
+  const orderInCart = useSelector(getOrderInCart)
 
-  const orderPrep = (attributes) => {
+  const orderPrep = attributes => {
     const order = {
-      orderItems: [],
+      orderItems: []
     }
 
     const orderItems = itemsInCart.map(jsonObject => {
-      const selectedJsonObject = {};
+      const selectedJsonObject = {}
       for (const attribute of attributes) {
-        if (attribute === "_id") {
-          selectedJsonObject[attribute] = jsonObject["id"];
+        if (attribute === '_id') {
+          selectedJsonObject[attribute] = jsonObject['id']
         }
-        if (attribute === "quantity") {
-          selectedJsonObject[attribute] = jsonObject["amount"];
+        if (attribute === 'quantity') {
+          selectedJsonObject[attribute] = jsonObject['amount']
         }
         if (attribute in jsonObject) {
-          selectedJsonObject[attribute] = jsonObject[attribute];
+          selectedJsonObject[attribute] = jsonObject[attribute]
         }
       }
 
-      return selectedJsonObject;
-    });
+      return selectedJsonObject
+    })
 
-    return orderItems;
+    return orderItems
   }
-
 
   const baseUrl = process.env.NEXT_PUBLIC_API_URL + 'credit/status/'
 
   const handleCheckout = async () => {
-
-    const orderItems = orderPrep(["_id", "name", "price", "quantity"])
-    let sum = 0;
-    orderItems.forEach(item => { sum = sum + item.price * item.quantity })
+    const orderItems = orderPrep(['_id', 'name', 'price', 'quantity'])
+    let sum = 0
+    orderItems.forEach(item => {
+      sum = sum + item.price * item.quantity
+    })
 
     const updatedOrder = {
       products: orderItems,
       orderId: orderInCart._id,
-      editOrderId: Array(10).fill(null).map(() => Math.round(Math.random() * 16).toString(16)).join(''),
+      editOrderId: Array(10)
+        .fill(null)
+        .map(() => Math.round(Math.random() * 16).toString(16))
+        .join(''),
       userId: orderInCart.userId,
       userName: orderInCart.userName,
       userEmail: orderInCart.userEmail,
       totalPrice: sum,
-      creditInfoId: orderInCart.creditInfoId,
+      creditInfoId: orderInCart.creditInfoId
     }
 
-    console.log("Order *************** : ", updatedOrder)
-    const orderUrl = process.env.NEXT_PUBLIC_API_URL + "credit"
+    console.log('Order *************** : ', updatedOrder)
+    const orderUrl = process.env.NEXT_PUBLIC_API_URL + 'credit'
 
-    await axios.post(orderUrl, updatedOrder, { withCredentials: true })
-      .then((resp) => {
-        console.log('Order response:', resp.data);
-        setTimeout(() => onRemoveAll(), 3000);
+    await axios
+      .post(orderUrl, updatedOrder, { withCredentials: true })
+      .then(resp => {
+        console.log('Order response:', resp.data)
+        setTimeout(() => onRemoveAll(), 3000)
 
         const url = baseUrl + resp.data._id
 
@@ -275,7 +274,8 @@ const YourCart = () => {
           status: 'PROCESSED'
         }
 
-        axios.patch(url, body,)
+        axios
+          .patch(url, body)
           .then(resp => {
             console.log('Request EDITED!')
             setOpenConfirm(false)
@@ -284,10 +284,10 @@ const YourCart = () => {
             console.log('request err', err)
           })
       })
-      .catch((error) => {
-        console.log('Order Error:', error);
-        setTimeout(() => onRemoveAll(), 3000);
-      });
+      .catch(error => {
+        console.log('Order Error:', error)
+        setTimeout(() => onRemoveAll(), 3000)
+      })
 
     if (!loading) {
       setSuccess(false)
@@ -319,7 +319,6 @@ const YourCart = () => {
             </div>
 
             <CartItem items={itemsInCart} />
-
           </div>
 
           {/* ====================================================================== */}
@@ -400,9 +399,7 @@ const YourCart = () => {
               autoHideDuration={6000}
               onClose={handelClose}
               message='request has been send successfully'
-
             />
-
           </div>
         </div>
       </div>
