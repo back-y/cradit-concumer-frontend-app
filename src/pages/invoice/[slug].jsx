@@ -71,10 +71,10 @@ const ResetButtonStyled = styled(Button)(({ theme }) => ({
 // ======= modal imports====
 const Invoice = () => {
   // ===fetch dtas states====
-  // const [eorderItems, setEorderItems] = useState([])
-  // const [ord, setOrd] = useState([])
+  const [eorderItems, setEorderItems] = useState([])
+  const [ord, setOrd] = useState([])
 
-  // const [eorder, setEorder] = useState({})
+  const [eorder, setEorder] = useState({})
 
   const [user, setUser] = useState({
     name: '',
@@ -98,32 +98,8 @@ const Invoice = () => {
 
     await axios.get(process.env.NEXT_PUBLIC_API_URL + endpoint).then(res => {
       settingUser(res.data)
+      setEorder(res.data)
     })
-
-    // await axios
-    //   .get(process.env.NEXT_PUBLIC_API_URL + 'credit')
-    //   .then(resp => {
-    //     // console.log('resp: ', resp)
-
-    //     // const servOrder = resp.data.filter(
-    //     //   ord => ord.editOrderId !== order.editOrderId && ord.status === 'PROCESSED' && order._id === ord.orderId
-    //     // )[0]
-    //     // setEorder(servOrder)
-    //     // console.log('Eorder: ', servOrder)
-    //     // console.log('Eorder: ', servOrder.products)
-    //     // setEorderItems(servOrder.products)
-    //     // setEUser({
-    //     //   ename: servOrder.userName,
-    //     //   eemail: servOrder.userEmail
-    //     // })
-    //   })
-    //   .catch(err => {
-    //     console.log('Error: ', err)
-    //   })
-
-    // *********
-    // setOrderItems(order.orderItems)
-    // setOrd(order)
     const userId = order.userId
     const userUrl = process.env.NEXT_PUBLIC_API_URL + 'auth/' + userId
     const resp = await axios.get(userUrl)
@@ -1102,8 +1078,8 @@ const Invoice = () => {
                           </thead>
                           {/* orderItems */}
                           <tbody>
-                            {eorderItems !== null ? (
-                              eorderItems.map((item, key) => (
+                            {order.orderItems !== null ? (
+                              order.orderItems.map((item, key) => (
                                 <tr key={key}>
                                   <td key={item._id} className='tm_width_3'>
                                     {item.name}
