@@ -12,6 +12,7 @@ const LandingPage = () => {
   // progress
   const [loading, setLoading] = useState(false)
   const [loading2, setLoading2] = useState(false)
+  // const [datas, setData] = useState()
 
   const router = useRouter()
 
@@ -39,6 +40,15 @@ const LandingPage = () => {
     Cookies.remove('customerType')
     Cookies.remove('role')
     Cookies.remove('jwt')
+    // const eventSource = new EventSource('http://localhost:4444/sse')
+    // eventSource.onmessage = ({ data }) => {
+    //   setData(data)
+    //   console.log('New message: ' + data)
+    // }
+
+    // eventSource.onerror = function (error) {
+    //   console.error('EventSource error:', error)
+    // }
   }, [])
 
   const bannerStyle = {
@@ -58,6 +68,7 @@ const LandingPage = () => {
   return (
     <div>
       {/* Banner Section */}
+
       <Grid container>
         <Grid item xs={12} style={bannerStyle}>
           <Grid style={{ position: 'relative', maiginTop: '0' }}>

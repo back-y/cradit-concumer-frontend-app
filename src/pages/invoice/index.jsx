@@ -329,11 +329,11 @@ const Invoice = () => {
     }
   }
   const dispatch = useDispatch()
-
   const uploadFiles = async () => {
-    const creditUrl = process.env.NEXT_PUBLIC_API_URL + 'credit/'
+    const creditUrl = process.env.NEXT_PUBLIC_API_URL + 'credit/getvty/' + order._id
     const resp = await axios.get(creditUrl)
     const res = resp.data.find(credit => credit.orderId === order._id)
+    console.log('myres', res)
     const creditId = res._id
 
     Cookies.set('creditId', creditId)
@@ -655,9 +655,7 @@ const Invoice = () => {
                                 {item.price}
                               </td>
                               <td className='tm_width_1'>{item.quantity}</td>
-                              <td className='tm_width_2 tm_text_right'>
-                                {(item.quantity * item.price).toFixed(2)} ETB
-                              </td>
+                              <td className='tm_width_2 tm_text_right'>{item.quantity * item.price} ETB</td>
                             </tr>
                           ))
                         ) : (
@@ -672,16 +670,14 @@ const Invoice = () => {
                     <p className='tm_mb2'>
                       <b className='tm_primary_color'>Payment info:</b>
                     </p>
-                    <p className='tm_m0'>Amount: {order.totalPrice.toFixed(2)} ETB</p>
+                    <p className='tm_m0'>Amount: {order.totalPrice} ETB</p>
                   </div>
                   <div className='tm_right_footer'>
                     <table className='tm_mb15'>
                       <tbody>
                         <tr className='tm_gray_bg '>
                           <td className='tm_width_3 tm_primary_color tm_bold'>Subtoal</td>
-                          <td className='tm_width_3 tm_primary_color tm_bold tm_text_right'>
-                            {order.totalPrice.toFixed(2)} ETB
-                          </td>
+                          <td className='tm_width_3 tm_primary_color tm_bold tm_text_right'>{order.totalPrice} ETB</td>
                         </tr>
                         <tr className='tm_gray_bg'>
                           <td className='tm_width_3 tm_primary_color'>
@@ -694,7 +690,7 @@ const Invoice = () => {
                         <tr className='tm_accent_bg'>
                           <td className='tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_white_color'>Grand Total </td>
                           <td className='tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_white_color tm_text_right'>
-                            {(order.totalPrice + order.totalPrice * 0.05).toFixed(2)} ETB
+                            {order.totalPrice + order.totalPrice * 0.05} ETB
                           </td>
                         </tr>
                       </tbody>
@@ -1102,7 +1098,7 @@ const Invoice = () => {
                                 {item.price}
                               </td> */}
                                   <td key={item._id} className='tm_width_2'>
-                                    {item.price.toFixed(2)}
+                                    {item.price}
                                   </td>
                                   <td className='tm_width_1'>{item.quantity}</td>
                                   <td className='tm_width_2 tm_text_right'>{item.quantity * item.price} ETB</td>
@@ -1122,7 +1118,7 @@ const Invoice = () => {
                         </p>
                         <p className='tm_m0'>
                           {/* Credit Card - 236***********928 <br /> */}
-                          Amount: {eorder.totalPrice.toFixed(2)} ETB
+                          Amount: {eorder.totalPrice} ETB
                         </p>
                       </div>
                       <div className='tm_right_footer'>
@@ -1131,7 +1127,7 @@ const Invoice = () => {
                             <tr className='tm_gray_bg '>
                               <td className='tm_width_3 tm_primary_color tm_bold'>Subtoal</td>
                               <td className='tm_width_3 tm_primary_color tm_bold tm_text_right'>
-                                {eorder.totalPrice.toFixed(2)} ETB
+                                {eorder.totalPrice} ETB
                               </td>
                             </tr>
                             <tr className='tm_gray_bg'>
