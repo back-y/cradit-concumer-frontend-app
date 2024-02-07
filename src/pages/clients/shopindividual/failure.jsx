@@ -6,8 +6,8 @@ import { Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 
 const shop = () => {
-  const router = useRouter();
-  
+  const router = useRouter()
+
   setTimeout(() => {
     router.push('/clients/shopindividual')
   }, 5000)
@@ -15,17 +15,12 @@ const shop = () => {
     <section>
       <Card>
         <CardContent>
-          <Typography style={{ marginLeft: '10px', fontSize: '20px' }} >
-            Your order ... 
+          <Typography style={{ marginLeft: '10px', fontSize: '20px' }}>Your order ...</Typography>
+          <Typography style={{ marginLeft: '10px', fontWeight: 'bold', color: 'red', fontSize: '20px' }}>
+            has failed
           </Typography>
-          <Typography style={{ marginLeft: '10px', fontWeight: 'bold', color: 'red', fontSize: '20px' }} >
-            has failed 
-          </Typography>
-          <Typography style={{ marginLeft: '10px', fontSize: '20px' }} >
-            Please try again 
-          </Typography>
+          <Typography style={{ marginLeft: '10px', fontSize: '20px' }}>Please try again</Typography>
         </CardContent>
-        
       </Card>
     </section>
   )
