@@ -14,7 +14,7 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 import { CardContent } from '@mui/material'
 import Cookies from 'js-cookie'
 import { useSelector, useDispatch } from 'react-redux'
-import { getBasicInfo, getCreditInfo, getLegalInfo, addBasicInfo ,getPofilePicture} from 'src/redux/candidateSlice';
+import { getBasicInfo, getCreditInfo, getLegalInfo, addBasicInfo, getPofilePicture } from 'src/redux/candidateSlice'
 import axios from 'axios'
 import Link from '@mui/material/Link'
 import Alert from '@mui/material/Alert'
@@ -63,7 +63,7 @@ export default function VerticalLinearStepper() {
   const basicInfo = useSelector(getBasicInfo)
   const legalInfo = useSelector(getLegalInfo)
   const creditInfo = useSelector(getCreditInfo)
-  const profilePicture= useSelector(getPofilePicture)
+  const profilePicture = useSelector(getPofilePicture)
 
   const dispatch = useDispatch()
 
@@ -107,15 +107,15 @@ export default function VerticalLinearStepper() {
       console.log('Files ... : ', legalInfo)
       console.log('FormData content: ', formData)
 
-      const profileURL=baseUrl + endPoint +  '/profilePic/'+id
-            const formdata1 = new FormData()
-            formdata1.append('profilePicture',profilePicture)
-            await axios.post(profileURL,formdata1, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
-            
+      const profileURL = baseUrl + endPoint + '/profilePic/' + id
+      const formdata1 = new FormData()
+      formdata1.append('profilePicture', profilePicture)
+      await axios.post(profileURL, formdata1, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+
       try {
         await axios.post(uploadUrl, formData, {
           headers: {
@@ -135,13 +135,16 @@ export default function VerticalLinearStepper() {
       const creditInfoUpdateUrl = baseUrl + 'customer/' + id
       try {
         console.log('My Credit info', creditInfo)
-        if (creditInfo) {
-          const resp = await axios.patch(creditInfoUpdateUrl, creditInfo)
-          console.log('Credit info update response: ', resp)
-          setOpenAlert2(true)
-          router.push('/credit/customerList/')
-        } else {
+        console.log('Role er', role)
+        if (!role || role !== 'credit_manager') {
           router.push('/')
+        } else {
+          if (creditInfo) {
+            const resp = await axios.patch(creditInfoUpdateUrl, creditInfo)
+            console.log('Credit info update response: ', resp)
+            setOpenAlert2(true)
+          }
+          router.push('/credit/customerList/')
         }
       } catch (err) {
         console.log('Credit info update error: ', err)
