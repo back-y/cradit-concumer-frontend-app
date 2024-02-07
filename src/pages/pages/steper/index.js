@@ -137,7 +137,7 @@ export default function VerticalLinearStepper() {
         console.log('My Credit info', creditInfo)
         console.log('Role er', role)
         if (!role || role !== 'credit_manager') {
-          router.push('/')
+          router.push('/success/registration/')
         } else {
           if (creditInfo) {
             const resp = await axios.patch(creditInfoUpdateUrl, creditInfo)

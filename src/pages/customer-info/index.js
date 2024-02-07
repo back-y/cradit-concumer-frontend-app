@@ -340,6 +340,13 @@ const CustomGallery = () => {
                         <h6 style={{ color: 'red' }}> {userInfos.company}</h6>
                       </span>
                     </div>
+                    <div className='tm_card_note tm_mobile_hide' style={{ display: 'flex' }}>
+                      <h6 className='tm_primary_color'>Name: </h6> &nbsp;&nbsp;{' '}
+                      <span>
+                        {' '}
+                        <h6 style={{ color: 'red' }}> {userInfos.expectedCredit}</h6>
+                      </span>
+                    </div>
                     {userInfos.updatedAt && (
                       <div className='tm_card_note tm_mobile_hide' style={{ display: 'flex' }}>
                         <h6 className='tm_primary_color'>Approval date: </h6>&nbsp;&nbsp;{' '}
