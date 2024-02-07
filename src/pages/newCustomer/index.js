@@ -14,6 +14,7 @@ const CustomGallery = () => {
   const [images, setImages] = useState([])
   const [userInfos, setUserInfos] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [profilePicture, setProfilePicture]= useState(null)
   const imageRef = useRef();
 
   useEffect(() => {
@@ -33,6 +34,7 @@ const CustomGallery = () => {
           const R_name = resp.data.documents.R_Cert
 
           const imgUrl = process.env.NEXT_PUBLIC_API_URL + 'file/'
+          setProfilePicture(resp.data.profilePicture)
           setImages([imgUrl + ID_name, imgUrl + T_name, imgUrl + L_name, imgUrl + R_name])
 
         })
@@ -77,6 +79,7 @@ const CustomGallery = () => {
       <Grid container spacing={2}>
         <div className='tm_invoice_info tm_mb25' style={{ backgroundColor: 'white', padding: '10px', display: 'flex', width: '100%' }}>
           <div className='tm_card_note tm_mobile_hide' style={{ width: '100%', display: 'block', justifyContent: 'space-between' }}>
+          <img src={ process.env.NEXT_PUBLIC_API_URL + 'file/' + profilePicture} />
             <div className='tm_card_note tm_mobile_hide' style={{ display: 'flex' }} >
               <h6 className='tm_primary_color'>Name: </h6> &nbsp;&nbsp; <span> <h6 style={{ color: 'red' }}> {userInfos.name}</h6></span>
             </div>
