@@ -94,7 +94,7 @@ const TableForCustomerInfo = () => {
             console.log("Resp data/ orders: ", resp.data);
 
             if (resp.data) {
-                const filtered = await resp.data.filter(order => (order.userId === reqCreditUser));
+                const filtered = resp.data.filter(order => (order.userId === reqCreditUser));
                 console.log('filtered', filtered);
 
                 setReqCredit(filtered);

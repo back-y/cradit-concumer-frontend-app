@@ -384,7 +384,7 @@ const YourCart = () => {
                 >
                   <div style={bannerStyle}>
                     <span>
-                      <img style={banStyle} src='/images/PBETH/svgicons/paypal.jpg' alt='KCCM' />
+                      <img style={banStyle} src='/images/PBETH/svgicons/kccmBG.jpg' alt='KCCM' />
                     </span>
                     <FormControlLabel value='KCCM' control={<Radio />} label='Use KCCM' />
                   </div>
@@ -497,7 +497,7 @@ const YourCart = () => {
     </section>
   ) : (
     <>
-      <h2>Your cart is empty please select an Item</h2>
+      <h2>THANK YOU FOR CHOOSING TO BUY FROM KEGEBEREW</h2>
     </>
   )
 }

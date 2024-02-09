@@ -97,45 +97,30 @@ import StatisticsCard from 'src/views/dashboard/StatisticsCard'
 
 import BarsGraph from 'src/pages/credit/BarsGraph'
 
-import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
-
-import TrendingUp from 'mdi-material-ui/TrendingUp'
-import CellphoneLink from 'mdi-material-ui/CellphoneLink'
-import AccountOutline from 'mdi-material-ui/AccountOutline'
 import Avatar from '@mui/material/Avatar'
 
+import Cookie from 'js-cookie'
 import ReactToPrint from 'react-to-print'
 
 import { useReactToPrint } from 'react-to-print'
 
-const salesData = [
-  {
-    stats: '0 ETB',
-    title: 'Total Credit Given',
-    color: 'primary',
-    icon: <TrendingUp sx={{ fontSize: '1.75rem' }} />
-  },
-  {
-    stats: '0 ETB',
-    title: 'Total Credit Paid',
-    color: 'success',
-    icon: <AccountOutline sx={{ fontSize: '1.75rem' }} />
-  },
-  {
-    stats: '0 ETB',
-    color: 'warning',
-    title: 'Total Credit Unpaid',
-    icon: <CellphoneLink sx={{ fontSize: '1.75rem' }} />
-  },
-  {
-    stats: '0 ETB',
-    color: 'info',
-    title: 'Total Unpaid Credit With Interest',
-    icon: <CurrencyUsd sx={{ fontSize: '1.75rem' }} />
-  }
-]
+// ========================================
+
+const role = Cookie.get('role')
 
 const renderStats = () => {
+  const [salesData, setSalesData] = useState([])
+
+  useEffect(() => {
+    const getter = async () => {
+      const url = process.env.NEXT_PUBLIC_API_URL + 'credit/totalCreditInfo'
+      const resp = await axios.get(url)
+      setSalesData(resp.data)
+      console.log('resp ,data', resp.data)
+    }
+    getter()
+  }, [])
+
   return salesData.map((item, index) => (
     <Grid item xs={12} sm={3} key={index}>
       <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
@@ -154,7 +139,7 @@ const renderStats = () => {
         </Avatar>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Typography variant='caption'>{item.title}</Typography>
-          <Typography variant='h6'>{item.stats}</Typography>
+          <Typography variant='h6'>{item.stats.toLocaleString()}</Typography>
         </Box>
       </Box>
     </Grid>
@@ -248,11 +233,11 @@ const CustomGallery = () => {
           <Grid item xs={12} md={12}>
             <StatisticsCard
               mainTitle={`${userInfos.name} Credit Status`}
-              TotalAllowedAmount='Total credit allowed 0 ETB'
+              TotalAllowedAmount={`Total credit allowed is ${userInfos.creditInfo} ETB`}
               emoji='😎 this month'
               renderState={renderStats()}
 
-              // names={name}
+            // names={name}
             />
           </Grid>
           <Grid item xs={12}>
