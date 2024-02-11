@@ -98,8 +98,8 @@ const Credit = () => {
           <Grid container spacing={6}>
             <Grid item xs={12} md={12}>
               <StatisticsCard
-                TotalAllowedAmount='Total credit allowed 0 ETB'
-                emoji='😎 this month'
+                // TotalAllowedAmount='Total credit allowed 0 ETB'
+                // emoji='😎 this month'
                 mainTitle='Your Corporate and Individuals Credit Status'
                 renderState={renderStats()}
                 names={name}
